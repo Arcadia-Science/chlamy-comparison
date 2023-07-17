@@ -11,6 +11,8 @@ This repository contains code for image processing and analysis to compare pheno
 
 *R* code was run with R version 4.3.0 (2023-04-21)
 
+*Python* code was run with Python 3.10.9
+
 Computation was performed on an image analysis workstation with the following specifications.
 
 Operating system: Windows 10 Pro Version 21H2 OS Build 19044.1889
