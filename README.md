@@ -14,6 +14,8 @@ This repository contains code for image processing and analysis to compare pheno
 *R Libraries/packages*: tidyverse 2.0.0, dplyr     1.1.2, readr     2.1.4, forcats   1.0.0, stringr   1.5.0, ggplot2   3.4.2, tibble    3.2.1, lubridate 1.9.2, tidyr     1.3.0, purrr     1.0.1 
 
 *Python* code was run with Python 3.10.9
+
+*Python Libraries/packages*: numpy: 1.24.3, matplotlib: 3.7.2
  
 Computation was performed on an image analysis workstation with the following specifications.
 
