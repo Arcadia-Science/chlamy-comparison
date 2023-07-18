@@ -1,6 +1,6 @@
 # Cell morphology analysis
 
-This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](research.arcadiascience.com/pub/result-chlamydomonas-phenotypes).
+This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes).
 
 ![Chlamydomonas smithii has a larger than C. reinhardtii by 20 square microns](https://github.com/Arcadia-Science/chlamy-comparison/files/12021426/Area_microns_superplot1.pdf)
 
@@ -24,7 +24,6 @@ This repository contains code for image processing and analysis to compare pheno
 
 *Python* code was run with Python 3.10.9
  
-
 Computation was performed on an image analysis workstation with the following specifications.
 
 Operating system: Windows 10 Pro Version 21H2 OS Build 19044.1889
