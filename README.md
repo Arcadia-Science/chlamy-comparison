@@ -7,7 +7,7 @@ This repository contains code for image processing and analysis to compare pheno
 ## Versions and platforms
 *Fiji macro* was used with ImageJ 1.53t
 
-*Cellprofiler pipeline* was run on CellProfiler version 4.2.5.
+*Cellprofiler pipeline* was run on CellProfiler version 4.2.5
 
 *R* code was run with R version 4.3.0 (2023-04-21)
 
