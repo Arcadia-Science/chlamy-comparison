@@ -5,5 +5,5 @@ This CSV file is available on zenodo at [![DOI](https://zenodo.org/badge/DOI/10.
 It can be downloaded using the following command:
 
 ```
-curl -JLO https://zenodo.org/record/6999004/files/measurements_Cells.csv.gz\?download\=1
+curl -JLO https://zenodo.org/record/8165714/files/experiments_csv.zip?download=1
 ```
