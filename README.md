@@ -2,7 +2,7 @@
 
 This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes).
 
-![Chlamydomonas smithii has a larger than C. reinhardtii by 20 square microns](https://github.com/Arcadia-Science/chlamy-comparison/files/12021426/Area_microns_superplot1.pdf)
+![Chlamydomonas smithii is larger than C. reinhardtii but they have a similar shape](https://github.com/Arcadia-Science/chlamy-comparison/assets/110641190/304e4acb-6b03-4a27-8581-616d9ee51bc5)
 
 ## Versions and platforms
 *Fiji macro* was used with ImageJ 1.53t
