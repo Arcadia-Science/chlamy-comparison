@@ -4,7 +4,8 @@ This repository contains code for image processing and analysis to compare pheno
 
 ![Chlamydomonas smithii is larger than C. reinhardtii but they have a similar shape](https://github.com/Arcadia-Science/chlamy-comparison/assets/110641190/a6854e63-e4f6-4779-904e-02ca65fb4d4d)
 
-Release v1.0.1 :[![DOI](https://zenodo.org/badge/644048016.svg)](https://zenodo.org/badge/latestdoi/644048016)
+Release v1.0.1
+[![DOI](https://zenodo.org/badge/644048016.svg)](https://zenodo.org/badge/latestdoi/644048016)
 
 
 ## Versions and platforms
