@@ -95,6 +95,7 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_proj.v.0.0.ijm. [Link to Fiji macro](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/FIJI/batch_sequential_avg_proj.v.0.0.ijm)
 
+
 ## Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
 
