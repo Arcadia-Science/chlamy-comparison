@@ -2,7 +2,7 @@
 
 This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](https://doi.org/10.57844/arcadia-35f0-3e16).
 
-    chlamy-comparison/morphology_video.mp4
+https://github.com/Arcadia-Science/chlamy-comparison/blob/89538d4e842adf2f871f7d38d93f879008472ff4/morphology_video.mp4
 
 Release v2.1
 
