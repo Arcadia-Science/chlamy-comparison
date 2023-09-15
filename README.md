@@ -20,6 +20,7 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
 ## Protocol for segmenting cells and taking measurements of 2D morphology
 
+This protocol is a step by step computational guide to segment algal cells from video data. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy. The output includes segmented cells as "objects" as well as measurements of the 2D morphology of the cells. For related experimental results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
 
 1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data.
 
@@ -58,10 +59,14 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
 ## Script for generating vector graphics of idealized cell
 
+This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
 
     python3 code/python/chlamy_modeler.py
 
 ## Protocol for visual and qualitative assessments of cell morphology
+
+This protocol is a step by step computational guide to create panels of a video to display difference in the 2D morphology of interfertile algal species. The protocol follows upon the previous protocols in this document. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy, as well as object masks. The output includes videos of masked cells and cumulative average projections of cells. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
+
 
 1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/max_area_image_obj_list.v.0.1.py)
 
@@ -71,7 +76,7 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
         python3 code/python/frames_for_angle.v.0.0.py
 
-3. Calculate swim angle and swim angle relative to the Y-axis. Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/swim_angle.v.0.2.py)
+3. Calculate swim angle and swim angle relative to the Y-axis. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/swim_angle.v.0.2.py)
 
        python3 code/python/swim_angle.v.0.2.py
 
