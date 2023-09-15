@@ -26,7 +26,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 
         zenodo_get 10.5281/zenodo.8326749
 
-2. Crop "pools" of swimming cells from raw videos using the Fiji Macro batch_interactive_crop_savetif.v.0.0. Samples of raw videos are contained in the the "experiments/{experiment}/raw_sample" directories. Choose "experiments" as the input directory. [Link to Fiji macro](./code/FIJI/batch_interactive_crop_savetif.ijm)
+2. Crop "pools" of swimming cells from raw videos using the [Fiji](https://imagej.net/software/fiji/) Macro batch_interactive_crop_savetif.v.0.0. Samples of raw videos are contained in the the "experiments/{experiment}/raw_sample" directories. Choose "experiments" as the input directory. [Link to Fiji macro](./code/FIJI/batch_interactive_crop_savetif.ijm)
 
 3. Parse focal sequences of frames from "pools". [Link Python script](./code/python/morphology_2d/focus_filter_laplacian.py)
 
@@ -37,7 +37,7 @@ This protocol is a step by step computational guide to segment algal cells from 
         python3 code/python/morphology_2d/sample_training.py
 
 
-6. Perform pixel classification with Ilastik. Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
+6. Perform pixel classification with [Ilastik](https://www.ilastik.org/). Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
 
 7. Organize probability maps by species and pool ID. [Link to Python script](./code/python/morphology_2d/organize_tif_by_species_well.py)
 
@@ -68,37 +68,37 @@ This script will generate a vector graphic of an idealized cell. The user may de
 This protocol is a step by step computational guide to create panels of a video to display difference in the 2D morphology of interfertile algal species. The protocol follows upon the previous protocols in this document. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy, as well as object masks. The output includes videos of masked cells and cumulative average projections of cells. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
 
-1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/max_area_image_obj_list.v.0.1.py)
+1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](./code/python/morphology_qualitative/max_area_image_obj_list.py)
 
-        python3 code/python/max_area_image_obj_list.v.0.1.py
+        python3 code/python/morphology_qualitative/max_area_image_obj_list.py
 
-2. Identify image frames to calculate swim angle. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/frames_for_angle.v.0.0.py)
+2. Identify image frames to calculate swim angle. [Link to Python script](./code/python/morphology_qualitative/frames_for_angle.py)
 
-        python3 code/python/frames_for_angle.v.0.0.py
+        python3 code/python/morphology_qualitative/frames_for_angle.py
 
-3. Calculate swim angle and swim angle relative to the Y-axis. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/swim_angle.v.0.2.py)
+3. Calculate swim angle and swim angle relative to the Y-axis. [Link to Python script](./code/python/morphology_qualitative/swim_angle.py)
 
-       python3 code/python/swim_angle.v.0.2.py
+       python3 ./code/python/morphology_qualitative/swim_angle.py
 
-4. Mask cells. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/image_mask.v.0.0.py)
+4. Mask cells. [Link to Python script](./code/python/morphology_qualitative/image_mask.py)
 
-       python3 code/python/image_mask.v.0.0.py
+       python3 code/python/morphology_qualitative/image_mask.py
 
-5. Get statistics about the objects. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/object_stats.v.0.0.py)
+5. Get statistics about the objects. [Link to Python script](./code/python/morphology_qualitative/object_stats.py)
 
-       python3 code/python/object_stats.v.0.0.py
+       python3 code/python/morphology_qualitative/object_stats.py
 
-6. Crop and reorient cells so they are swimming "up" and the major axis of the cell is aligned with the y-axis. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/crop_orient_major_regionprops.v.0.2.py)
+6. Crop and reorient cells so they are swimming "up" and the major axis of the cell is aligned with the y-axis. [Link to Python script](./code/python/morphology_qualitative/crop_orient_major.py)
 
-        python3 code/python/crop_orient_major_regionprops.v.0.2.py
+        python3 code/python/morphology_qualitative/crop_orient_major.py
 
-7. Combine cells into stacks by experiment and species. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/save_stack.v.0.3.py)
+7. Combine cells into stacks by experiment and species. [Link to Python script](./code/python/morphology_qualitative/save_stack.py)
 
-        python3 code/python/save_stack.v.0.3.py
+        python3 code/python/morphology_qualitative/save_stack.py
 
-8.  Create a substack with the number of frames you want in the final video in Fiji.
+8.  Create a substack with the number of frames you want in the final video in [Fiji](https://imagej.net/software/fiji/).
 
-9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_proj.v.0.0.ijm. [Link to Fiji macro](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/FIJI/batch_sequential_avg_proj.v.0.0.ijm)
+9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_proj.v.0.0.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
 
 # Versions and platforms
