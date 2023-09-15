@@ -42,9 +42,9 @@ This protocol is a step by step computational guide to segment algal cells from 
 
 6. Perform pixel classification with [Ilastik](https://www.ilastik.org/). Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
 
-7. Organize probability maps by species and pool ID. [Link to Python script](./code/python/morphology_2d/organize_tif_by_species_well.py)
+7. Organize probability maps by species and pool ID. [Link to Python script](./code/python/morphology_2d/organize_tif_by_species_and_well.py)
 
-        python3 code/python/morphology_2d/organize_tif_by_species_well.py
+        python3 code/python/morphology_2d/organize_tif_by_species_and_well.py
 
 8. **Python**: Segment cells and take 2D morphology measurements. [Link to Python script](./code/python/morphology_2d/segment_chlamy.py)
 
