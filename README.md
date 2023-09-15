@@ -59,7 +59,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 
 ## Script for generating vector graphics of idealized cell
 
-This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).[Link to Python script](./code/python/idealized_cell/chlamy_modeler.py)
+This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e). [Link to Python script](./code/python/idealized_cell/chlamy_modeler.py)
 
     python3 code/python/idealized_cell/chlamy_modeler.py
 
