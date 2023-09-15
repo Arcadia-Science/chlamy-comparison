@@ -101,7 +101,7 @@ This protocol is a step by step computational guide to create panels of a video 
 
 8.  Create a substack with the number of frames you want in the final video in [Fiji](https://imagej.net/software/fiji/).
 
-9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_proj.v.0.0.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
+9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
 
 # Versions and platforms
