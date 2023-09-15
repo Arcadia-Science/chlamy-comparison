@@ -22,46 +22,46 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
 This protocol is a step by step computational guide to segment algal cells from video data. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy. The output includes segmented cells as "objects" as well as measurements of the 2D morphology of the cells. For related experimental results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
 
-1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data.
+1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data. Use [zenodo_get](https://github.com/dvolgyes/zenodo_get).
 
-        curl -JLO https://zenodo.org/record/8326749/files/experiments.zip?download=1
+        zenodo_get 10.5281/zenodo.8326749
 
-2. Crop "pools" of swimming cells from raw videos using the Fiji Macro batch_interactive_crop_savetif.v.0.0. Samples of raw videos are contained in the the "experiments/{experiment}/raw_sample" directories. Choose "experiments" as the input directory. [Link to Fiji macro](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/FIJI/batch_interactive_crop_savetif.ijm)
+2. Crop "pools" of swimming cells from raw videos using the Fiji Macro batch_interactive_crop_savetif.v.0.0. Samples of raw videos are contained in the the "experiments/{experiment}/raw_sample" directories. Choose "experiments" as the input directory. [Link to Fiji macro](./code/FIJI/batch_interactive_crop_savetif.ijm)
 
-3. Parse focal sequences of frames from "pools". [Link Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/focus_varLaplacv.0.1.py)
+3. Parse focal sequences of frames from "pools". [Link Python script](./code/python/morphology_2d/focus_filter_laplacian.py)
 
-        python3 code/python/focus_varLaplacv.0.1.py
+        python3 code/python/morphology_2d/focus_filter_laplacian.py
+   
+5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training.py)
 
-4. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/sample_training_set.v.1.0.py)
-
-        python3 code/python/sample_training_set.v.1.0.py
+        python3 code/python/morphology_2d/sample_training.py
 
 
-5. Perform pixel classification with Ilastik. Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
+6. Perform pixel classification with Ilastik. Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
 
-6. Organize probability maps by species and pool ID. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/organize_tif_sp_pool.v.2.0.py)
+7. Organize probability maps by species and pool ID. [Link to Python script](./code/python/morphology_2d/organize_tif_by_species_well.py)
 
-        python3 code/python/organize_tif_sp_pool.v.2.0.py
+        python3 code/python/morphology_2d/organize_tif_by_species_well.py
 
-7. **Python**: Segment cells and take 2D morphology measurements. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/segment_chlamy.v.2.1.py)
+8. **Python**: Segment cells and take 2D morphology measurements. [Link to Python script](./code/python/morphology_2d/segment_chlamy.py)
 
-        python3 code/python/segment_chlamy.v.2.1.py
+        python3 code/python/morphology_2d/segment_chlamy.py
 
-   **Cellprofiler**: Alternatively, segment the cells and take measurements in Cellprofiler with the pipeline chlamy_segment.cppipe. [Link to Cellprofiler pipeline](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/Cellprofiler/chlamy_segment.cppipe)
+   **Cellprofiler**: Alternatively, segment the cells and take measurements in Cellprofiler with the pipeline chlamy_segment.cppipe. [Link to Cellprofiler pipeline](./code/Cellprofiler/chlamy_segment.cppipe)
 
-8.  Identify the maximal area measurement per focal sequence. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/max_area_focus_seq.v.0.4.py)
+9.  Identify the maximal area measurement per focal sequence. [Link to Python script](./code/python/morphology_2d/max_area_focus_seq.py)
 
-        python3 code/python/max_area_focus_seq.v.0.4.py
+        python3 code/python/morphology_2d/max_area_focus_seq.py
 
-9.  Parse per pool mean measurements. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/parse_2d_morphology_exp_species.v.0.0.py)
+10.  Parse per pool mean measurements. [Link to Python script](./code/python/morphology_2d/parse_2d_morphology.py)
 
-        python3 code/python/parse_2d_morphology_exp_species.v.0.0.py
+        python3 code/python/morphology_2d/parse_2d_morphology.py
 
 ## Script for generating vector graphics of idealized cell
 
-This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
+This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).[Link to Python script](./code/python/idealized_cell/chlamy_modeler.py)
 
-    python3 code/python/chlamy_modeler.py
+    python3 code/python/idealized_cell/chlamy_modeler.py
 
 ## Protocol for visual and qualitative assessments of cell morphology
 
