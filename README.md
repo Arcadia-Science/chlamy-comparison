@@ -50,7 +50,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 
         python3 code/python/morphology_2d/segment_chlamy.py
 
-   **Cellprofiler**: Alternatively, segment the cells and take measurements in Cellprofiler with the pipeline chlamy_segment.cppipe. [Link to Cellprofiler pipeline](./code/Cellprofiler/chlamy_segment.cppipe)
+   **Cellprofiler**: Alternatively, segment the cells and take measurements in Cellprofiler with the pipeline chlamy_segment.cppipe. [Link to Cellprofiler pipeline](code/CellProfiler/chlamy_segment.cppipe)
 
 9.  Identify the maximal area measurement per focal sequence. [Link to Python script](./code/python/morphology_2d/max_area_focus_seq.py)
 
