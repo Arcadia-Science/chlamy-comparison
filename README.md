@@ -19,7 +19,19 @@ Data Repository
 
 # Computational Protocols
 
-For each step run the commands indicated in code blocks from the "chlamy-comparison" directory.
+For each step run the commands indicated in code blocks from the "chlamy-comparison" directory. This repository uses conda to manage software environments and installations.
+You can find operating system-specific instructions for installing miniconda [here](https://docs.conda.io/en/latest/miniconda.html).
+
+
+
+## Getting started with this repository
+
+After installing conda run the following command to create the pipeline run environment.
+We installaed Miniconda3 version `23.7.3'.
+
+        conda env create -n morph2d --file envs/morph2d.yml
+        conda activate morph2d
+
 
 ## Protocol for segmenting cells and taking measurements of 2D morphology
 
