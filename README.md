@@ -35,9 +35,9 @@ This protocol is a step by step computational guide to segment algal cells from 
 
         python3 code/python/morphology_2d/focus_filter_laplacian.py
    
-5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training.py)
+5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training_set.py)
 
-        python3 code/python/morphology_2d/sample_training.py
+        python3 code/python/morphology_2d/sample_training_set.py
 
 
 6. Perform pixel classification with [Ilastik](https://www.ilastik.org/). Load the training sets and process the focal sequences in batch. Directory = main/experiments/ilastik
