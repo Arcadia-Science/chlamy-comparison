@@ -18,7 +18,7 @@ Data Repository
 
 For each step run the commands indicated in code blocks from the "chlamy-comparison" directory.
 
-**Protocol for segmenting cells and taking measurements of 2D morphology:**
+## Protocol for segmenting cells and taking measurements of 2D morphology
 
 
 1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data.
@@ -56,12 +56,12 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 
         python3 code/python/parse_2d_morphology_exp_species.v.0.0.py
 
-**Script for generating vector graphics of idealized cell:**
+## Script for generating vector graphics of idealized cell
 
 
     python3 code/python/chlamy_modeler.py
 
-**Protocol for visual and qualitative assessments of cell morphology:**
+## Protocol for visual and qualitative assessments of cell morphology
 
 1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/python/max_area_image_obj_list.v.0.1.py)
 
@@ -96,7 +96,7 @@ For each step run the commands indicated in code blocks from the "chlamy-compari
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_proj.v.0.0.ijm. [Link to Fiji macro](https://github.com/Arcadia-Science/chlamy-comparison-private/blob/main/code/FIJI/batch_sequential_avg_proj.v.0.0.ijm)
 
 
-## Versions and platforms
+# Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
 
 *R* code was run with R version 4.3.0 (2023-04-21)
