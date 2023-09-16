@@ -53,6 +53,7 @@ def compute_area_means(base_directory):
     # Save the results to a CSV file
     results_df.to_csv(os.path.join(base_directory, 'measure_2d_exp_species.v.1.csv'), index=False)
 
+#Entry point
 if __name__ == "__main__":
     base_directory = "./experiments"
     compute_area_means(base_directory)
