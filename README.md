@@ -22,7 +22,15 @@ Data Repository
 For each step run the commands indicated in code blocks from the "chlamy-comparison" directory. This repository uses conda to manage software environments and installations.
 You can find operating system-specific instructions for installing miniconda [here](https://docs.conda.io/en/latest/miniconda.html). We installaed Miniconda3 version `23.7.3'.
 
+                curl -JLO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh # download the miniconda installation script
+                bash Miniconda3-latest-Linux-x86_64.sh # run the miniconda installation script. Accept the license and follow the defaults.
+                source ~/.bashrc # source the .bashrc for miniconda to be available in the environment
 
+                # configure miniconda channel order
+                conda config --add channels defaults 
+                conda config --add channels bioconda
+                conda config --add channels conda-forge
+                conda config --set channel_priority strict
 
 ## Getting started with this repository
 
