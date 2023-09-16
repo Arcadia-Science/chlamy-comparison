@@ -39,6 +39,7 @@ def object_list(base_directory):
     # Save the aggregated DataFrame to a new CSV file
     all_data.to_csv(os.path.join(base_directory, 'object_image_list.csv'), index=False)
 
+#Entry point
 if __name__ == "__main__":
     base_directory = "./experiments"
     object_list(base_directory)
