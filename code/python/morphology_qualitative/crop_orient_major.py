@@ -32,12 +32,6 @@ def get_major_axis_orientation(binary_image):
     largest_object = max(properties, key=lambda x: x.area)
     return largest_object.orientation  # This is in radians
 
-#def save_intermediate_image(image_np, path, suffix):
-    image = Image.fromarray(image_np.astype(np.uint16), 'I;16')
-    save_path = path.replace(".tif", f"_{suffix}.tif")
-    image.save(save_path)
-    print(f"Saved {suffix} image to {save_path}")
-
 def crop_and_rotate(image, x, y, angle, output_path):
     # Crop to 49 x 49 pixels
     crop_rectangle_49 = (x - 24, y - 24, x + 25, y + 25)
@@ -57,7 +51,6 @@ def crop_and_rotate(image, x, y, angle, output_path):
     # Threshold the 8-bit image (Converting non-zero pixels to 255)
     _, thresholded = cv2.threshold(rotated_8bit, 1, 255, cv2.THRESH_BINARY)
     #save_intermediate_image(thresholded, output_path, "thresholded")
-
 
     # Convert thresholded image to binary
     binary_image = thresholded // 255
@@ -82,7 +75,6 @@ def crop_and_rotate(image, x, y, angle, output_path):
     rotated_again = Image.fromarray(rotated_again_np.astype(np.uint16), 'I;16')
 
     return rotated_again
-
 
 # Read the CSV file into a pandas DataFrame
 df = pd.read_csv("./experiments/object_image_list_obj_stats.csv")
