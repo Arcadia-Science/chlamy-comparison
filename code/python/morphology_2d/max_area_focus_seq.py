@@ -57,6 +57,7 @@ def extract_max_area_object(base_directory):
                     # If CSV doesn't exist, create it and write with the header
                     max_area_row.to_frame().T.to_csv(csv_dest_path, mode='w', header=True, index=False)
 
+# Entry point
 if __name__ == "__main__":
     base_directory = "./experiments"  # Adjust this to the base directory path
     extract_max_area_object(base_directory)
