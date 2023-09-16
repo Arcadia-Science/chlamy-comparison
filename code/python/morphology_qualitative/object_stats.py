@@ -64,6 +64,7 @@ def compute_object_stats(base_directory):
     # Save the merged DataFrame to a new CSV file
     merged_df.to_csv(os.path.join(base_directory, 'object_image_list_obj_stats.csv'), index=False)
 
+#Entry point
 if __name__ == "__main__":
     base_directory = "./experiments"
     compute_object_stats(base_directory)
