@@ -28,8 +28,6 @@ def compute_area_means(base_directory):
             mean_major_axis_length = df['MajorAxisLength'].mean()
             mean_minor_axis_length = df['MinorAxisLength'].mean()
 
-
-
             # Extract metadata_species and metadata_pool_id from the CSV
             species = df['metadata_species'].iloc[0]  # Assuming all rows have the same species
             pool_id = df['metadata_pool_id'].iloc[0]  # Assuming all rows have the same pool_id
