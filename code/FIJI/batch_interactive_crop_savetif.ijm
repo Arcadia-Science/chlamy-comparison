@@ -4,23 +4,28 @@
  * saves stacks as tif files. Processes multiple images in a folder.
  */
 
-#@ File (label = "Input directory", style = "directory") input
-#@ File (label = "Output directory", style = "directory") output
-#@ String (label = "File suffix", value = ".nd2") suffix
+// Choose "experiments" directory with raw data of cells in pools
+#@ File (label = "Input directory", style = "directory") input 
+suffix = ".tif";
 
-//Time in milliseconds
-start = getTime();
 run("ROI Manager...");
 run("Set Measurements...", "area mean modal min integrated redirect=None decimal=3");
 
 // Define function to scan folders/subfolders/files to find files with correct suffix
-function processFolder(input) {
-	list = getFileList(input);
-	list = Array.sort(list);
-	for (i = 0; i < list.length; i++) {
-		if(endsWith(list[i], suffix))
-			roi_interactive_func(input, output, list[i]);
-	};
+function processFolder(in) {
+    list = getFileList(in);
+    list = Array.sort(list);
+    for (i = 0; i < list.length; i++) {
+        if(File.isDirectory(in + File.separator + list[i])){
+            
+            // If it is a directory, process it
+            processFolder(in + File.separator + list[i]);
+        } else if(endsWith(list[i], suffix) && indexOf(in, "raw_sample") != -1){
+   
+            // Process only if the folder is named 'raw_sample
+            roi_interactive_func(in + list[i]);
+        }
+    };
 };
 
 /* Define function that will open an image, make a square, and allow the user to define square regions of 
@@ -28,9 +33,9 @@ function processFolder(input) {
  * and then save them as tif files. 
  */
 
-function roi_interactive_func(input, output, file) {
-	print("Processing: " + input + File.separator + file);
-	run("Bio-Formats Importer", "open=" + input + File.separator + file + " color_mode=Default rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
+function roi_interactive_func(file) {
+	print("Processing: " + file);
+	run("Bio-Formats Importer", "open=" + file + " color_mode=Default rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 	imgName = getTitle();
 	print(imgName);
 	
@@ -44,7 +49,7 @@ function roi_interactive_func(input, output, file) {
 	
 	run("ROI Manager...");
 	makeRectangle(0, 0, 182, 182);
-	waitForUser("Select ROIs");
+	waitForUser("Select ROIs by moving square over the ROI and clicking 'Add' in the ROI manager");
 	
 	//Process each ROI
 	n = roiManager("count");
@@ -59,8 +64,19 @@ function roi_interactive_func(input, output, file) {
    		rename(roi_name);
    		selectImage(roi_name);
    		
+   		
+   		outputdir = substring(in, 0, indexOf(in, "raw"));
+   		print(outputdir);
+   		if (!File.isDirectory(outputdir + "pools")){
+   			File.makeDirectory(outputdir + "pools");
+   		};
+   		
+   		if (!File.isDirectory(outputdir + "pools" + File.separator + group)){
+   			File.makeDirectory(outputdir + "pools" + File.separator + group);
+   		};
+   		
    		//Save as .tif
-   		saveAs("Tiff", output + File.separator + roi_name + ".tif");
+   		saveAs("Tiff", outputdir + File.separator + "pools" + File.separator + group + File.separator + roi_name + ".tif");
    		close(roi_name);
 	};
 	
@@ -70,3 +86,4 @@ function roi_interactive_func(input, output, file) {
 };	
 
 processFolder(input);
+;

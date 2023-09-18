@@ -1,0 +1,13 @@
+name: parentv2.1
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - pandas
+  - scipy
+  - scikit-image
+  - matplotlib
+  - opencv
+  - zenodo_get
+prefix: envs/parentv2.1
