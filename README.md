@@ -27,7 +27,7 @@ You can find operating system-specific instructions for installing miniconda [he
                 source ~/.bashrc # source the .bashrc for miniconda to be available in the environment
 
                 # configure miniconda channel order
-                conda config --add channels defaults 
+                conda config --add channels defaults
                 conda config --add channels bioconda
                 conda config --add channels conda-forge
                 conda config --set channel_priority strict
@@ -54,7 +54,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 3. Parse focal sequences of frames from "pools". [Link Python script](./code/python/morphology_2d/focus_filter_laplacian.py)
 
         python3 code/python/morphology_2d/focus_filter_laplacian.py
-   
+
 5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training_set.py)
 
         python3 code/python/morphology_2d/sample_training_set.py
@@ -123,6 +123,12 @@ This protocol is a step by step computational guide to create panels of a video 
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
+# 3D morphology protocols
+## Processing raw data
+## Batch deconvolution
+## Generate composite images
+## Image segmentation
+## Quantification
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
