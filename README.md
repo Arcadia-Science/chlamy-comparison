@@ -123,6 +123,8 @@ This protocol is a step by step computational guide to create panels of a video 
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
+# Cell Wall Analysis
+##Protocol for measuring cell wall thickness
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
