@@ -164,13 +164,13 @@ Run Batch_Merge_2-channel.ijm (code/FIJI/3D_Morpho_macros/Batch_Merge_2-channel.
         run("Merge Channels...", "c2=" + image1 + " c6=" + image2 + " create keep");
 
 In FIJI there are 7 options for composite channel LUTs:
-C1(red)
-C2(green)
-C3(blue)
-C4(gray)
-C5(cyan)
-C6(magenta)
-c7(yellow)
+        C1(red)
+        C2(green)
+        C3(blue)
+        C4(gray)
+        C5(cyan)
+        C6(magenta)
+        c7(yellow)
 
 Run ZProj-contrast.ijm (code/FIJI/3D_Morpho_macros/ZProj-contrast.ijm) and select the directory where you saved your composite images generated in the previous step. This macro will perform default contrast enhancement (adjusted in lines 35 and 42 of the macro) for each channel:
 
@@ -180,19 +180,19 @@ The macro will then generate a MIP saved in a ./MIPs directory inside the select
 
 ## Image segmentation
 
-This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system.
+This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. You can use the Napari plug-in or run their code through jupyter notebooks. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system. The napari version is accessible here: 
 
-### Adjusting parameters for image segmentation
+### Adjusting parameters for image segmentation in Napari using the Allen Institute Cell Segmentation plug-in
 
 5. navigate to the directory containing the cloned aics-segmentation github respository and in the activated environment run:
 
-                jupyter notebook
+
 
 In your default browser running the jupyter notebook nagivate to /lookup_table_demo and select:
 
                 playground_Sec61b.ipynb
 
-This will open up a jupyter notebook where you can determine the parameter settings you need to adjust in order to generate segmentation masks for your deconvolved data. 
+This will open up a jupyter notebook where you can determine the parameter settings you need to adjust in order to generate segmentation masks for your deconvolved data.
 
 ### Batch processing to generate image segmentation masks
 
