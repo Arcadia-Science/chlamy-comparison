@@ -180,21 +180,37 @@ The macro will then generate a MIP saved in a ./MIPs directory inside the select
 
 ## Image segmentation
 
-This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. You can use the Napari plug-in or run their code through jupyter notebooks. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system. The napari version is accessible here: 
+This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. You can use the Napari plug-in or run their code through jupyter notebooks. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system. The napari version is accessible here: (https://www.napari-hub.org/plugins/napari-allencell-segmenter). For the purpose of this demo, we will assume you will be running your analysis in the Napari plug-in:
 
-### Adjusting parameters for image segmentation in Napari using the Allen Institute Cell Segmentation plug-in
+### Adjusting parameters for image segmentation in Napari using the Allen Institute Cell Segmentation Napari plug-in
 
-5. navigate to the directory containing the cloned aics-segmentation github respository and in the activated environment run:
+5. Installation of Napari and the Allen Institute Cell Segmentation plug-in.
+
+Generate a conda environment following the appropriate installation instructions specific for your operating system from the Napari documentation: https://napari.org/stable/tutorials/fundamentals/installation.html#installation
+
+We generated an environment named
+
+        napari-aics
+
+and the dependencies required to run the analyses in Napari in this environment are available in this file:
+
+        envs/napari-aics.yml
+
+Activate your environment:
+
+        conda activate napari-aics
+
+And open Napari:
+
+        napari
+
+TBD - screen shots or QT movie tutorial?
+
+### Batch processing to generate image segmentation masks in Napari
+
+6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data.
 
 
-
-In your default browser running the jupyter notebook nagivate to /lookup_table_demo and select:
-
-                playground_Sec61b.ipynb
-
-This will open up a jupyter notebook where you can determine the parameter settings you need to adjust in order to generate segmentation masks for your deconvolved data.
-
-### Batch processing to generate image segmentation masks
 
 ## Quantification
 

@@ -2,7 +2,8 @@ import SimpleITK as sitk
 import os
 import csv
 
-SCALING_FACTOR = 43.0769
+SCALING_FACTOR = 43.0769 # pixels/micron for 1.5x magnifier
+#SCALING_FACTOR = 64.6154  # pixels/micron for 1.0x magnifier
 Z_STEP = 0.1  # in microns
 
 def compute_volume_and_density(mask_image, raw_image):
@@ -45,7 +46,7 @@ def main(mask_directory, raw_data_directory):
     total_density = 0.0
     total_non_zero_voxels = 0  # Count of all non-zero voxels across all images
 
-    mask_files = [f for f in os.listdir(mask_directory) if f.endswith("_BGSub_struct_segmentation.tiff")]
+    mask_files = [f for f in os.listdir(mask_directory) if f.endswith("_BGSub.segmentation.tiff")]
     raw_data_files = os.listdir(raw_data_directory)
 
     with open('results.csv', 'w', newline='') as csvfile:
@@ -53,7 +54,7 @@ def main(mask_directory, raw_data_directory):
         csv_writer.writerow(["Mask File", "Volume (cubic microns)", "Integrated Density", "Mean Intensity"])
 
         for mask_file_name in mask_files:
-            expected_raw_data_filename = mask_file_name.replace("processed_", "").replace("_BGSub_struct_segmentation.tiff", ".tif")
+            expected_raw_data_filename = mask_file_name.replace("processed_", "").replace("_BGSub.segmentation.tiff", ".tif")
             mask_path = os.path.join(mask_directory, mask_file_name)
 
             if expected_raw_data_filename not in raw_data_files:

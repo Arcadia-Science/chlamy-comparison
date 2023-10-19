@@ -4,8 +4,10 @@ from skimage.measure import label, regionprops
 import tifffile
 import csv
 
-XY_SCALE_FACTOR = 43.0769  # pixels/micron
+# XY_SCALE_FACTOR = 43.0769  # pixels/micron for 1.5x magnifier
+XY_SCALE_FACTOR = 64.6154  # pixels/micron for 1.0x magnifier
 Z_STEP = 0.1  # micron
+
 
 def get_max_dimensions(segmented_array):
     labeled_array = label(segmented_array)
@@ -28,10 +30,12 @@ def get_max_dimensions(segmented_array):
 
     return depth, height, width
 
+
 def process_directory(input_directory, output_csv):
     with open(output_csv, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Filename", "Max Depth (micron)", "Max Height (micron)", "Max Width (micron)"])  # CSV header
+        writer.writerow(["Filename", "Max Depth (micron)",
+                        "Max Height (micron)", "Max Width (micron)"])  # CSV header
 
         for filename in os.listdir(input_directory):
             if filename.endswith(".tiff"):
@@ -44,7 +48,8 @@ def process_directory(input_directory, output_csv):
 
                 print(f"Processed {filename}")
 
+
 if __name__ == "__main__":
-    input_directory = "/Users/davematus/Documents/Arcadia Microscopy/Chlamy SoRa and confocal/Chlamy SoRa/new_batch_run/Csmithii/allen_segmentation/Creinhardtii/561"
-    output_csv_path = "output_dimensionsCr.csv"
+    input_directory = "/Volumes/Microscopy/Theia/Matus/Chlamy_decon/aics/Cs/Cs_chloro_aics"
+    output_csv_path = "output_dimensionsCs_chloro.csv"
     process_directory(input_directory, output_csv_path)
