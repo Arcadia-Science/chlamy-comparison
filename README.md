@@ -27,7 +27,7 @@ You can find operating system-specific instructions for installing miniconda [he
                 source ~/.bashrc # source the .bashrc for miniconda to be available in the environment
 
                 # configure miniconda channel order
-                conda config --add channels defaults 
+                conda config --add channels defaults
                 conda config --add channels bioconda
                 conda config --add channels conda-forge
                 conda config --set channel_priority strict
@@ -54,7 +54,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 3. Parse focal sequences of frames from "pools". [Link Python script](./code/python/morphology_2d/focus_filter_laplacian.py)
 
         python3 code/python/morphology_2d/focus_filter_laplacian.py
-   
+
 5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training_set.py)
 
         python3 code/python/morphology_2d/sample_training_set.py
@@ -80,13 +80,14 @@ This protocol is a step by step computational guide to segment algal cells from 
 
         python3 code/python/morphology_2d/parse_2d_morphology.py
 
+
 ## Script for generating vector graphics of idealized cell
 
 This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e). [Link to Python script](./code/python/idealized_cell/chlamy_modeler.py)
 
     python3 code/python/idealized_cell/chlamy_modeler.py
 
-## Protocol for visual and qualitative assessments of cell morphology
+## Protocol for visual assessments of cell morphology
 
 This protocol is a step by step computational guide to create panels of a video to display difference in the 2D morphology of interfertile algal species. The protocol follows upon the previous protocols in this document. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy, as well as object masks. The output includes videos of masked cells and cumulative average projections of cells. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
@@ -123,8 +124,50 @@ This protocol is a step by step computational guide to create panels of a video 
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
+## Protocol for measurement and visual assessment of cell motility
+
+1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data. **Skip this step if data is already downloaded.** Use [zenodo_get](https://github.com/dvolgyes/zenodo_get).
+
+        zenodo_get 10.5281/zenodo.8326749
+
+2. Collect information about objects.  The script processes a set of images, identifies objects in them, calculates their centroids, and determines the movement direction of the largest object by comparing the centroids between frames. **Input** = cell objects. **Output** = image_data_with_upward_angles.csv file.
+
+        python3 code/python/motility_dynamic_fig/object_trajectory_info.py
+
+3. Reorient objects. The script processes images based on data in the CSV file. It rotates, translates, and crops each image based on the movement direction of a detected object. The processed images are then saved in new directories, ".../final_transformed_images/...". **Input** = objects and image_data_with_upward_angles.csv. **Output** = transformed images.
+
+        python3 code/python/motility_dynamic_fig/rotate_translate.py
+
+4. Calculate angular and linear displacement from frame to frame. The script processes images, identifies contours, and computes both angular (degrees) and linear (pixels) displacements between contours in consecutive frames. The angle is calculated as the angle between two vectors defined by three consecutive points. The linear displacement is the distance between point two and three. The displacements are listed under the third point. The results are saved to a CSV file. **Input** = images in final_transformed_images directories. **Output** = centroids_displacements.csv. In these images 1 pixel = 0.6398 microns.
+
+        python3 code/python/motility_dynamic_fig/angular_linear_displacement.py
+
+5. Calculate the mean absolute angular displacement per track. Only inlcude allowed experiments. Experiment 3 was removed due to external flow through the wells. **Input** = centroids_displacements.csv. **Output** = mean_angular_displacements_allowed.csv.
+
+        python3 code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py
+
+6. Filter data. This script filters rows from an input CSV file where the 'seq_frame' column has a value of 0 and writes the filtered data to an output CSV file. **Input** = mean_angular_displacements_allowed.csv. **Output** = filtered_unbinned_data.csv.
+
+        python3 code/python/motility_dynamic_fig/filter_data.py
+
+7. Sample filtered data to ensure equal representation of each species for each experiment. This script samples rows from an input CSV file, ensuring that each combination of 'experiment' and 'species' in the dataset is represented by the same number of rows. This number is determined by the smallest group size of the combinations. The sampled data is then written to an output CSV file. **Input** = filtered_unbinned_data.csv. **Output** = sampled_unbinned_data.csv.
+
+        python3 code/python/motility_dynamic_fig/sample_filtered_data.py
+
+8. Bin the sampled data into 18 bins representing 10 degree spans between 0 and 180 degrees. This script reads data from an input CSV file, bins the 'avg_displacement' values into 18 bins,and assigns each row a bin number based on its 'avg_displacement' value. The binned data is then written to an output CSV file.  **Input** = sampled_unbinned_data.csv. **Output** = sampled_binned_data.csv.
+
+        python3 code/python/motility_dynamic_fig/bin_sampled_data.py
+
+9. Merge data into one csv file. This script merges two input CSV files (`sampled_binned_data.csv` and `centroids_displacements.csv`) based on common columns ('experiment', 'species', 'pool_ID', and 'seq_number'). After merging, it retains specific columns from the sampled file and all columns from the centroids file. The merged data is then written to an output CSV file. **Inputs** = sampled_binned_data.csv and  centroids_displacements.csv. **Output** = merged_data.csv.
+
+        python3 code/python/motility_dynamic_fig/parse_sampled_binned_sequences.py experiments/sampled_binned_data.csv experiments/centroids_displacements.csv experiments/merged_data.csv
+
+10. Plot histogram with bins and generate vector tracks. This script performs multiple visualization tasks on data read from a CSV file named 'merged_data.csv'.First, it creates and saves vector plots for different groups in the data, with each plot displaying a vector and an associated average angular velocity. Then, it generates a histogram displaying the frequency of bins by species for seq_frame=0. The vector plots are saved as grayscale 8-bit TIFF images in specific directories, and the histogram is saved as a PNG. **Input** = merged_data.csv. **Output** = Images of vector tracks saved in directories as such, "./experiments/vectors_sampled_binned/bin_{bin_category}/{species}/".
+
+        python3 code/python/plot_histogram_vector_images.py
 
 # Versions and platforms
+
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
 
 *R* code was run with R version 4.3.0 (2023-04-21)
