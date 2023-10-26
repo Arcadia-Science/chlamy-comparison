@@ -126,6 +126,8 @@ This protocol is a step by step computational guide to create panels of a video 
 
 ## Protocol for measurement and visual assessment of cell motility
 
+![C. reinhardtii swims faster and they have different and complex modes of motility](fig_motility_dynamic.gif)
+
 1. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data. **Skip this step if data is already downloaded.** Use [zenodo_get](https://github.com/dvolgyes/zenodo_get).
 
         zenodo_get 10.5281/zenodo.8326749
