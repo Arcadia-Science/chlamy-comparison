@@ -8,4 +8,4 @@ dependencies:
   - opencv
   - imageio
   - pandas
-prefix: envs
+prefix: envs/motility
