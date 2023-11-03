@@ -144,7 +144,7 @@ This protocol is a step by step computational guide to create panels of a video 
 
         python3 code/python/motility_dynamic_fig/angular_linear_displacement.py
 
-5. Calculate the mean absolute angular displacement per track. Only inlcude allowed experiments. Experiment 3 was removed due to external flow through the wells. **Input** = centroids_displacements.csv. **Output** = mean_angular_displacements_allowed.csv. [Link to script](./code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py)
+5. Calculate the mean absolute angular displacement per track. Only include allowed experiments. Experiment 3 was removed due to external flow through the wells. **Input** = centroids_displacements.csv. **Output** = mean_angular_displacements_allowed.csv. [Link to script](./code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py)
 
         python3 code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py
 
