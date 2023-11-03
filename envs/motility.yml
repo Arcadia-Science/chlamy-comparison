@@ -1,0 +1,11 @@
+name: motility
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - matplotlib
+  - opencv
+  - imageio
+  - pandas
+prefix: envs
