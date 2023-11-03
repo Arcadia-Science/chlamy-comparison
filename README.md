@@ -132,7 +132,7 @@ This protocol is a step by step computational guide to create panels of a video 
 
         zenodo_get 10.5281/zenodo.8326749
 
-2. Collect information about objects.  The script processes a set of images, identifies objects in them, calculates their centroids, and determines the movement direction of the largest object by comparing the centroids between frames. **Input** = cell objects. **Output** = image_data_with_upward_angles.csv file. [Link to script](./code/python/motility_dynamic_fig/object_trajectory_info.py)
+2. Collect information about objects. The script processes a set of images, identifies objects in them, calculates their centroids, and determines the movement direction of the largest object by comparing the centroids between frames. **Input** = cell objects. **Output** = image_data_with_upward_angles.csv file. [Link to script](./code/python/motility_dynamic_fig/object_trajectory_info.py)
 
         python3 code/python/motility_dynamic_fig/object_trajectory_info.py
 
