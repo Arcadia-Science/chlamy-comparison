@@ -141,19 +141,19 @@ You will need to install 2 FIJI plugins to be able to process images in the foll
 
 2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is an .nd2 file, but you can adjust the macro to match your file format type as needed.
 
-Run ND2-Split-BS.ijm [code/FIJI/3D_Morpho_macros/ND2-Split-BS.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can tun the macro two times to process the images in /demo_data/Chlamy_3D_morpho_demo_data/Creinhardtii_demo and /demo_data/Chlamy_3D_morpho_demo_data/Csmithii_demo.
+Run ND2-Split-BS.ijm [./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can tun the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
 
 ## Batch deconvolution
 
 3. Deconvolve your background subtracted z-stacks. If you are processing the demo data, you can utilize the two PSF files computed in PSF Generator that we have generated based on our image acquisition parameters for the demo data. Please refer to the PSF Generator plug-in documentation (http://bigwww.epfl.ch/algorithms/psfgenerator/) if you need to generate your own PSF file for deconvolution.
 
-Run DeconLab2-batch.ijm (code/FIJI/3D_Morpho_macros/DeconLab2-batch.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./demo_data.
+Run DeconLab2-batch.ijm (./code/FIJI/3D_Morpho_macros/DeconLab2-batch.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./data/demo_PSFs.
 
 For the demo, we are using the RIF algorithm in DeconvolutionLab2 as we found that it performed best given the different deconvolution algorithms available in the plug-in. For your own data, we recommend running DecovolutionLab2 in FIJI and determining which algorithm functions best. You can modify the FIJI macro DeconLab2-batch.ijm by adjusting "RIF 0.1000" in line 30:
 
         algorithm = " -algorithm RIF 0.1000";
 
-You should now have two new directories (we setup directories ./decon560 and ./decon640 when running the macro) the contain the results of deconvolution of the demo data. If you want to compare the two species at the end of the demo, make sure to process the images from both species' demo data (Creinhardtii_demo and Csmithii_demo).
+You should now have two new directories (we setup directories ./decon560 and ./decon640 when running the macro) the contain the results of deconvolution of the demo data. If you want to compare the two species at the end of the demo, make sure to process the images from both species' demo data (./data/C_reinhardtii and ./data/C_smithii).
 
 ## Generate composite images and maximum projections (MIPs) of the deconvolved data
 
@@ -204,15 +204,68 @@ And open Napari:
 
         napari
 
-TBD - screen shots or QT movie tutorial?
+In Napari open up an image from the demo data (./data/C_reinhardtii). You can drag and drop the file into Napari or use File --> Open File(s) to open the image. Next, you can open up the AICS plugin by navigating to: Plugins-->napari-allencell-segmenter-->Workflow editor
+
+You can work through the Workflow Editor to create a segmentation mask. This will allow you to see the results of each step in the workflow as well as save your own .json file to run all of your images in batch processing. We used the following inputs:
 
 ### Batch processing to generate image segmentation masks in Napari
 
-6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data.
+6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data. We have provided the .json files that we generated using the Workflow editor located here: code/python/3D_morpho_scripts/Chloro.json and code/python/3D_morpho_scripts/Mito.json.
 
+To batch process your images in Napari, open the napari-allencell-segmenter-->Batch processing plugin and follow the instructions, providing the directory of the data you would like to process and the location of the workflow .json file.
 
 
 ## Quantification
+
+7. Now that you have generated a set of image segmentation masks based on the deconvolution of the raw data files, you are ready to quantify the data.
+
+You will need to generate a conda environment to run two python scripts to estimate the total volume of individual algal cells based on the mitochondrial dye segmentation mask you generated in Napari and to compute the total volume of the chloroplast and mitochondrial networks in each of the images.
+
+We generated an environment named
+
+        volume
+
+and the dependencies required to run the analyses in Napari in this environment are available in this file:
+
+        envs/volume.yml
+
+Activate your environment:
+
+        conda activate volume
+
+To estimate the volume as an ellipse, we wrote a script
+
+        /code/python/ellipsoid_measure_v2.py
+
+the processes a directory of 3D image files to compute the maximum dimensions of the largest segmented region
+in each image. The maximum depth, height, and width of these regions are calculated and saved to a specified CSV file.
+The script is run from the command line, accepting inputs for the directory of image files, and the path to the output CSV file.
+
+Usage:
+
+        python ellipse_measure_v2.py --input-dir <path_to_input_directory> --output-csv <path_to_output_csv_file>
+
+Next, you can calculate the voxel volume of your data as well as the integrated density by providing the following script:
+
+        /code/python/volume_v6.py
+
+This script processes a directory of 3D image masks and a separate directory of raw data images
+to compute the volume, integrated density, and mean intensity of segmented structures in the masks,
+outputting these metrics to a specified output directory.
+The script is run from the command line, accepting inputs for the directory of mask image files,
+the directory of raw data images, and the path to the output directory.
+Usage:
+
+        python script.py --mask-dir <path_to_mask_directory> --raw-data-dir <path_to_raw_data_directory> --output-dir <path_to_output_directory>
+
+You will need to point the script to the directory containing the segmentations masks and the directory containing the original raw data that you have split by channel using our ImageJ macro:
+
+        ND2-Split-BS-v5.ijm
+
+
+## Statistics and Generating Plots
+
+This set of R notebooks takes the output of the dimension measurements generated using the Python code in this GitHub (/code/python/ellipsoid_measure.py and /code/python/volume.py) and calculates the volume of an ellipsoid and the eccentricity as estimates of the cell-body morphology. We then combined those calculated measurements with the organelle dimensions into a csv file ("output_cell_volume_mito_chlor.csv") and filtered the data, checked summary statistics, made violin plots of the data, and compared each measurement by species using non-parametric statistics.
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
@@ -223,12 +276,17 @@ TBD - screen shots or QT movie tutorial?
 
 *Python* code was run with Python 3.11.5
 
-Computation was performed on MacBook Pro computer with the following specifications:
+Computation was performed on MacBook Pro computers with the following specifications:
 
 macOS: Ventura 13.4.1 (c)
 Chip Apple M2 Max
 Memory 32 Gb
 
+3D morphology:
+
+macOS: Ventura 13.5.1 (c)
+Chip Apple M1 Max
+Memory 64Gb
 # Feedback, contributions, and reuse
 
 We try to be as open as possible with our work and make all of our code both available and usable.
