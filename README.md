@@ -2,7 +2,7 @@
 
 This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](https://doi.org/10.57844/arcadia-35f0-3e16).
 
-![C. smithii is ~20% larger than C. reinhardtii](morphology_2d.gif)
+![C. smithii is ~20% larger than C. reinhardtii](figs/morphology_2d.gif)
 
 C. smithii is ~20% larger than C. reinhardtii
 
@@ -126,7 +126,7 @@ This protocol is a step by step computational guide to create panels of a video 
 
 ## Protocol for measurement and visual assessment of cell motility
 
-![C. reinhardtii swims faster and they have different and complex modes of motility](fig_motility_dynamic.gif)
+![C. reinhardtii swims faster and they have different and complex modes of motility](figs/fig_motility_dynamic.gif)
 
 1. Activate the environment with conda.
 
