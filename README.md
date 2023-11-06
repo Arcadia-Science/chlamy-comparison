@@ -210,7 +210,7 @@ You can work through the Workflow Editor to create a segmentation mask. This wil
 
 ### Batch processing to generate image segmentation masks in Napari
 
-6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data. We have provided the .json files that we generated using the Workflow editor located here: code/python/3D_morpho_scripts/Chloro.json and code/python/3D_morpho_scripts/Mito.json.
+6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data. We have provided the .json files that we generated using the Workflow editor located here: code/Napari/Chloro.json and code/Napari/Mito.json.
 
 To batch process your images in Napari, open the napari-allencell-segmenter-->Batch processing plugin and follow the instructions, providing the directory of the data you would like to process and the location of the workflow .json file.
 
