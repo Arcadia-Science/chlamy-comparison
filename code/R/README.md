@@ -8,3 +8,5 @@ curl -JLO https://zenodo.org/record/8165714/files/experiments_csv.zip\?download\
 ```
 
 The [motility_v3_pub.ipynb](./motility_v3_pub.ipynb) notebook relies on the two csv files in the [data](./data) directory fseq_measurements.v.1.csv and fseq_velocities_well_avg_2.csv.
+
+The [autocorrelation_and_joint_velocity_distribution_analyses.ipynb](./autocorrelation_and_joint_velocity_distribution_analyses.ipynb) relies on a .RDS file of cell trajectories available in the [data](./data) directory named chlamydomonas_species_full_motility_trajectories.RDS.
