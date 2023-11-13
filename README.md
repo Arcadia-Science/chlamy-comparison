@@ -137,7 +137,7 @@ This protocol is a step by step computational protocol to process and analyze th
 
 ## Processing raw data
 
-You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download DeconvolutionLab2 (https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and PSF Generator (http://bigwww.epfl.ch/algorithms/psfgenerator/)and install them in your FIJI Plugins folder.
+You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download DeconvolutionLab2 (https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and PSF Generator (http://bigwww.epfl.ch/algorithms/psfgenerator/) and install them in your FIJI Plugins folder.
 
 2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is an .nd2 file, but you can adjust the macro to match your file format type as needed.
 
