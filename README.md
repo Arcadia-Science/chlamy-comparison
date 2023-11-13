@@ -265,7 +265,7 @@ You will need to point the script to the directory containing the segmentation m
 
 ## Statistics and Generating Plots
 
-This set of R notebooks takes the output of the dimension measurements generated using the Python code in this GitHub (/code/python/ellipsoid_measure.py and /code/python/volume.py) and calculates the volume of an ellipsoid and the eccentricity as estimates of the cell-body morphology. We then combined those calculated measurements with the organelle dimensions into a csv file ("output_cell_volume_mito_chlor.csv") and filtered the data, checked summary statistics, made violin plots of the data, and compared each measurement by species using non-parametric statistics.
+This set of R notebooks takes the output of the dimension measurements generated using the Python code in this GitHub (/code/python/ellipsoid_measure.py and /code/python/volume.py) and calculates the volume of an ellipsoid and the eccentricity as estimates of the cell-body morphology. We then combined those calculated measurements with the organelle dimensions into a csv file ("output_cell_volume_mito_chlor.csv"), filtered the data, checked summary statistics, made violin plots, and compared each measurement by species using non-parametric statistics.
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
