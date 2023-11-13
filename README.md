@@ -141,7 +141,7 @@ You will need to install 2 FIJI plugins to be able to process images in the foll
 
 2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is an .nd2 file, but you can adjust the macro to match your file format type as needed.
 
-Run ND2-Split-BS.ijm [./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can tun the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
+Run ND2-Split-BS.ijm [./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can run the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
 
 ## Batch deconvolution
 
