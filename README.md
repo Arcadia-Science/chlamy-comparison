@@ -237,7 +237,7 @@ To estimate the volume as an ellipse, we wrote a script
 
         /code/python/ellipsoid_measure_v2.py
 
-the processes a directory of 3D image files to compute the maximum dimensions of the largest segmented region
+to processes a directory of 3D image files to compute the maximum dimensions of the largest segmented region
 in each image. The maximum depth, height, and width of these regions are calculated and saved to a specified CSV file.
 The script is run from the command line, accepting inputs for the directory of image files, and the path to the output CSV file.
 
