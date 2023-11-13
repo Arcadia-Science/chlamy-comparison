@@ -258,7 +258,7 @@ Usage:
 
         python script.py --mask-dir <path_to_mask_directory> --raw-data-dir <path_to_raw_data_directory> --output-dir <path_to_output_directory>
 
-You will need to point the script to the directory containing the segmentations masks and the directory containing the original raw data that you have split by channel using our ImageJ macro:
+You will need to point the script to the directory containing the segmentation masks and the directory containing the original raw data that you have split by channel using our ImageJ macro:
 
         ND2-Split-BS-v5.ijm
 
