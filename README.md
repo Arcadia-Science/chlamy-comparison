@@ -91,7 +91,7 @@ This script will generate a vector graphic of an idealized cell. The user may de
 This protocol is a step by step computational guide to create panels of a video to display difference in the 2D morphology of interfertile algal species. The protocol follows upon the previous protocols in this document. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy, as well as object masks. The output includes videos of masked cells and cumulative average projections of cells. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
 
-1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](./code/python/morphology_qualitative/max_area_image_object_list.py)
+1. Create a list of images with maximum area objects with relevant metadata. [Link to Python script](./code/python/morphology_qualitative/max_area_image_object_list.py)
 
         python3 code/python/morphology_qualitative/max_area_image_object_list.py
 
@@ -122,6 +122,36 @@ This protocol is a step by step computational guide to create panels of a video 
 8.  Create a substack with the number of frames you want in the final video in [Fiji](https://imagej.net/software/fiji/).
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
+
+# Cell Wall Analysis
+## Protocol for measuring cell wall thickness
+This protocol is a step-by-step computational guide to analyze the intensity and diameter of Calcofluor White signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
+
+1. Segment & Measure cells [Link to Cell profiler: 
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/CellProfiler/CW_Pipeline.cppipe
+
+2. Extract individual cells from larger files
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/ExtractIndividualCells.py
+
+3. Re-segment cells & measure objects: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets.
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/CellProfiler/CW_Pipeline_Extracted.cppipe
+
+4. Convert Database to CSV:
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/SQLite2CSV.py
+
+4. Align based on coordinates
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/AlignExtractedObjects.py
+
+5. Pad Files so line scans are evenly distributed
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/PadExtractedTiffs.py
+
+6. Line Scans through major and minor axes. This data is exported to a .csv file. 
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/RadialIntensityMajorMinor.py
+
+7. Split data between peaks and width
+/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/SplitCSVPeaksWidth.py
+
+Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
 
 
 # Versions and platforms
@@ -154,3 +184,4 @@ We apply this same policy to feedback on the text and other non-code content in 
 
 If you make a substantial contribution, you are welcome to publish it or use it in your own work (in accordance with the license — our pubs are CC BY 4.0 and our code is openly licensed).
 We encourage anyone to build upon our efforts.
+
