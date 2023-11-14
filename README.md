@@ -128,28 +128,28 @@ This protocol is a step by step computational guide to create panels of a video 
 This protocol is a step-by-step computational guide to analyze the intensity and diameter of Calcofluor White signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
 1. Segment & Measure cells [Link to Cell profiler: 
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/CellProfiler/CW_Pipeline.cppipe
+code/CellProfiler/CW_Pipeline.cppipe
 
 2. Extract individual cells from larger files
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/ExtractIndividualCells.py
+code/python/cell_wall/ExtractIndividualCells.py
 
 3. Re-segment cells & measure objects: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets.
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/CellProfiler/CW_Pipeline_Extracted.cppipe
+code/CellProfiler/CW_Pipeline_Extracted.cppipe
 
 4. Convert Database to CSV:
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/SQLite2CSV.py
+code/python/cell_wall/SQLite2CSV.py
 
 4. Align based on coordinates
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/AlignExtractedObjects.py
+code/python/cell_wall/AlignExtractedObjects.py
 
 5. Pad Files so line scans are evenly distributed
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/PadExtractedTiffs.py
+code/python/cell_wall/PadExtractedTiffs.py
 
 6. Line Scans through major and minor axes. This data is exported to a .csv file. 
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/RadialIntensityMajorMinor.py
+code/python/cell_wall/RadialIntensityMajorMinor.py
 
 7. Split data between peaks and width
-/Users/cameronmacquarrie/projects/chlamy-comparison-v3-private/code/python/cell_wall/SplitCSVPeaksWidth.py
+code/python/cell_wall/SplitCSVPeaksWidth.py
 
 Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
 
