@@ -40,13 +40,6 @@ After installing conda run the following command to create the pipeline run envi
         conda env create -n morph2d --file envs/morph2d.yml
         conda activate morph2d
 
-For creating the pipeline run environment for 3D morphology run the following commands:
-
-
-        conda env create -n morph3d --file envs/morph3d.yml
-        conda activate morph3d
-
-
 ## Protocol for segmenting cells and taking measurements of 2D morphology
 
 This protocol is a step by step computational guide to segment algal cells from video data. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy. The output includes segmented cells as "objects" as well as measurements of the 2D morphology of the cells. For related experimental results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
@@ -131,29 +124,29 @@ This protocol is a step by step computational guide to create panels of a video 
 
 # 3D morphology protocols
 
-This protocol is a step by step computational profile to process and analyze the 3D morphology of the mitochondiral and cholorplas network of algal cells. The input is sub-nyquist sampled z-stacks of algal cells acquired by spinning disk confocal microscopy. The output includes images that have been deconvolved, accompanying segmentation masks of the labeled data and volume measurements. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
+This protocol is a step by step computational protocol to process and analyze the 3D morphology of the mitochondiral and cholorplast network of algal cells. The input is sub-nyquist sampled z-stacks of algal cells acquired by spinning disk confocal microscopy. The output includes images that have been deconvolved, accompanying segmentation masks of the labeled data and volume measurements. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
 1. Download demo data from Zenodo. This will be a directory called "3D_morpho" with subdirectories and image data. Use [zenodo_get](https://github.com/dvolgyes/zenodo_get). (link TBD)
 
 ## Processing raw data
 
-You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download DeconvolutionLab2 (https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and PSF Generator (http://bigwww.epfl.ch/algorithms/psfgenerator/)and install them in your FIJI Plugins folder.
+You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download DeconvolutionLab2 (https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and PSF Generator (http://bigwww.epfl.ch/algorithms/psfgenerator/) and install them in your FIJI Plugins folder.
 
-2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is an .nd2 file, but you can adjust the macro to match your file format type as needed.
+2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is a .nd2 file, but you can adjust the macro to match your file format type as needed.
 
-Run ND2-Split-BS.ijm [code/FIJI/3D_Morpho_macros/ND2-Split-BS.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can tun the macro two times to process the images in /demo_data/Chlamy_3D_morpho_demo_data/Creinhardtii_demo and /demo_data/Chlamy_3D_morpho_demo_data/Csmithii_demo.
+Run ND2-Split-BS.ijm [./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can run the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
 
 ## Batch deconvolution
 
 3. Deconvolve your background subtracted z-stacks. If you are processing the demo data, you can utilize the two PSF files computed in PSF Generator that we have generated based on our image acquisition parameters for the demo data. Please refer to the PSF Generator plug-in documentation (http://bigwww.epfl.ch/algorithms/psfgenerator/) if you need to generate your own PSF file for deconvolution.
 
-Run DeconLab2-batch.ijm (code/FIJI/3D_Morpho_macros/DeconLab2-batch.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./demo_data.
+Run DeconLab2-batch.ijm (./code/FIJI/3D_Morpho_macros/DeconLab2-batch.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./data/demo_PSFs.
 
 For the demo, we are using the RIF algorithm in DeconvolutionLab2 as we found that it performed best given the different deconvolution algorithms available in the plug-in. For your own data, we recommend running DecovolutionLab2 in FIJI and determining which algorithm functions best. You can modify the FIJI macro DeconLab2-batch.ijm by adjusting "RIF 0.1000" in line 30:
 
         algorithm = " -algorithm RIF 0.1000";
 
-You should now have two new directories (we setup directories ./decon560 and ./decon640 when running the macro) the contain the results of deconvolution of the demo data. If you want to compare the two species at the end of the demo, make sure to process the images from both species' demo data (Creinhardtii_demo and Csmithii_demo).
+You should now have two new directories (we setup directories ./decon560 and ./decon640 when running the macro) the contain the results of deconvolution of the demo data. If you want to compare the two species at the end of the demo, make sure to process the images from both species' demo data (./data/C_reinhardtii and ./data/C_smithii).
 
 ## Generate composite images and maximum projections (MIPs) of the deconvolved data
 
@@ -178,41 +171,6 @@ Run ZProj-contrast.ijm (code/FIJI/3D_Morpho_macros/ZProj-contrast.ijm) and selec
 
 The macro will then generate a MIP saved in a ./MIPs directory inside the selected directory of composite images.
 
-## Image segmentation
-
-This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. You can use the Napari plug-in or run their code through jupyter notebooks. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system. The napari version is accessible here: (https://www.napari-hub.org/plugins/napari-allencell-segmenter). For the purpose of this demo, we will assume you will be running your analysis in the Napari plug-in:
-
-### Adjusting parameters for image segmentation in Napari using the Allen Institute Cell Segmentation Napari plug-in
-
-5. Installation of Napari and the Allen Institute Cell Segmentation plug-in.
-
-Generate a conda environment following the appropriate installation instructions specific for your operating system from the Napari documentation: https://napari.org/stable/tutorials/fundamentals/installation.html#installation
-
-We generated an environment named
-
-        napari-aics
-
-and the dependencies required to run the analyses in Napari in this environment are available in this file:
-
-        envs/napari-aics.yml
-
-Activate your environment:
-
-        conda activate napari-aics
-
-And open Napari:
-
-        napari
-
-TBD - screen shots or QT movie tutorial?
-
-### Batch processing to generate image segmentation masks in Napari
-
-6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data.
-
-
-
-## Quantification
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
@@ -223,12 +181,17 @@ TBD - screen shots or QT movie tutorial?
 
 *Python* code was run with Python 3.11.5
 
-Computation was performed on MacBook Pro computer with the following specifications:
+Computation was performed on MacBook Pro computers with the following specifications:
 
 macOS: Ventura 13.4.1 (c)
 Chip Apple M2 Max
 Memory 32 Gb
 
+3D morphology:
+
+macOS: Ventura 13.5.1 (c)
+Chip Apple M1 Max
+Memory 64Gb
 # Feedback, contributions, and reuse
 
 We try to be as open as possible with our work and make all of our code both available and usable.
