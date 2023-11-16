@@ -1,3 +1,9 @@
+If you would like to work with our demo data, it is available here:
+
+3D morphology data:
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10127603.svg)](https://doi.org/10.5281/zenodo.10127603)
+
 This directory contains 4 FIJI macros to process multiple images in a directory.
 ND2-Split-BS-v5.ijm will convert .nd2 files from Nikon Elements, split the images into their separate channels (in this case, brightfield = C1, 640 or chloroplast auto-fluorescence is C2, and 561 or mitochondrial dye staining is C3). These files will be located in new directories ./TIF_Output/C1 C2 and C3 The macro also performs rolling ball subtraction with a user input (we used a value of 300) and saves the C2 and C3 data in new directories as ./BGSub_Output/C2 and C3.
 
