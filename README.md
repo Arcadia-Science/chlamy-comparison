@@ -7,7 +7,7 @@ This repository contains code for image processing and analysis to compare pheno
 C. smithii is ~20% larger than C. reinhardtii
 
 
-Release v4
+Release v3
 
 Github
 
@@ -138,17 +138,17 @@ This protocol is a step by step computational protocol to process and analyze th
 
 ## Processing raw data
 
-You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download DeconvolutionLab2 (https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and PSF Generator (http://bigwww.epfl.ch/algorithms/psfgenerator/) and install them in your FIJI Plugins folder.
+You will need to install 2 FIJI plugins to be able to process images in the following sections of the protocol that utilize FIJI for image processing. Download [DeconvolutionLab2](https://bigwww.epfl.ch/deconvolution/deconvolutionlab2/) and [PSF Generator](http://bigwww.epfl.ch/algorithms/psfgenerator/) and install them in your FIJI Plugins folder.
 
-2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: code/FIJI/3D_Morpho_macros. This script assumes your data is a .nd2 file, but you can adjust the macro to match your file format type as needed.
+2. Batch process z-stacks.  To process raw data in preparation for image segmentation, you will utilize 4 custom FIJI macros found in the directory: [code/FIJI/3D_Morpho_macros](./code/FIJI/3D_Morpho_macros). This script assumes your data is a .nd2 file, but you can adjust the macro to match your file format type as needed.
 
-Run ND2-Split-BS.ijm [./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm] This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can run the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
+Run [ND2-Split-BS-v5.ijm](./code/FIJIcode/FIJI/3D_morpho_macros/ND2-Split-BS-v5.ijm). This FIJI macro will import your raw data, split the channels into 3 TIF z-stack directories (C1, C2 and C3) inside /TIF_Output, perform rolling ball background subtraction (default value = 300) on your fluorescence data, and save those z-stacks in new directories (C2 and C3) inside the directory, /BGSub_Output. For the demo, you can run the macro two times to process the images in ./data/C_reinhardtii and ./data/C_smithii.
 
 ## Batch deconvolution
 
-3. Deconvolve your background subtracted z-stacks. If you are processing the demo data, you can utilize the two PSF files computed in PSF Generator that we have generated based on our image acquisition parameters for the demo data. Please refer to the PSF Generator plug-in documentation (http://bigwww.epfl.ch/algorithms/psfgenerator/) if you need to generate your own PSF file for deconvolution.
+3. Deconvolve your background subtracted z-stacks. If you are processing the demo data, you can utilize the two PSF files computed in PSF Generator that we have generated based on our image acquisition parameters for the demo data. Please refer to the [PSF Generator plug-in documentation](http://bigwww.epfl.ch/algorithms/psfgenerator/) if you need to generate your own PSF file for deconvolution.
 
-Run DeconLab2-batch.ijm (./code/FIJI/3D_Morpho_macros/DeconLab2-batch.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./data/demo_PSFs.
+Run [DeconLab2-batch_v4_.ijm](./code/FIJI/3D_Morpho_macros/DeconLab2-batch_v4_.ijm) for each channel of background subtracted data. This FIJI macro will ask you for input and output directories as well as the corresponding PSF file. For the demo, you should use PSF_BW-640.tif for the cholorplast data (./BGSub_Output/C2) and PSF_BW-561.tif for the mitochondria data (./BGSub_Output/C3). The two PSF files are in ./data/demo_PSFs.
 
 For the demo, we are using the RIF algorithm in DeconvolutionLab2 as we found that it performed best given the different deconvolution algorithms available in the plug-in. For your own data, we recommend running DecovolutionLab2 in FIJI and determining which algorithm functions best. You can modify the FIJI macro DeconLab2-batch.ijm by adjusting "RIF 0.1000" in line 30:
 
@@ -160,7 +160,7 @@ You should now have two new directories (we setup directories ./decon560 and ./d
 
 4. The following section is not necessary for image segmentation and analysis, but if you would like to batch process your deconvolved data to view composite (multi-color) images and generate maximum intensity projections of the data you can run the following two custom FIJI macros.
 
-Run Batch_Merge_2-channel.ijm (code/FIJI/3D_Morpho_macros/Batch_Merge_2-channel.ijm) and select each directory of deconvolved images you processed above. By default, the first channel you select will be labeled with a green LUT and the second channel with a magenta LUT. You can adjust these in the macro in line 38 by replacing "c2=" and "c6=" with other channels.
+Run [Batch_Merge_2-channel_v2.ijm](./code/FIJI/3D_Morpho_macros/Batch_Merge_2-channel_v2.ijm) and select each directory of deconvolved images you processed above. By default, the first channel you select will be labeled with a green LUT and the second channel with a magenta LUT. You can adjust these in the macro in line 38 by replacing "c2=" and "c6=" with other channels.
 
         run("Merge Channels...", "c2=" + image1 + " c6=" + image2 + " create keep");
 
@@ -173,7 +173,7 @@ In FIJI there are 7 options for composite channel LUTs:
         C6(magenta)
         c7(yellow)
 
-Run ZProj-contrast.ijm (code/FIJI/3D_Morpho_macros/ZProj-contrast.ijm) and select the directory where you saved your composite images generated in the previous step. This macro will perform default contrast enhancement (adjusted in lines 35 and 42 of the macro) for each channel:
+Run [ZProj-contrast-v2.ijm](./code/FIJI/3D_Morpho_macros/ZProj-contrast-v2.ijm) and select the directory where you saved your composite images generated in the previous step. This macro will perform default contrast enhancement (adjusted in lines 35 and 42 of the macro) for each channel:
 
         run("Enhance Contrast", "saturated=0.35");
 
