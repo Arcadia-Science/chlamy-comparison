@@ -15,7 +15,13 @@ Github
 
 Data Repository
 
+2D morphology data:
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8326749.svg)](https://doi.org/10.5281/zenodo.8326749)
+
+3D morphology data:
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10127603.svg)](https://doi.org/10.5281/zenodo.10127603)
 
 # Computational Protocols
 
@@ -126,7 +132,9 @@ This protocol is a step by step computational guide to create panels of a video 
 
 This protocol is a step by step computational protocol to process and analyze the 3D morphology of the mitochondiral and cholorplast network of algal cells. The input is sub-nyquist sampled z-stacks of algal cells acquired by spinning disk confocal microscopy. The output includes images that have been deconvolved, accompanying segmentation masks of the labeled data and volume measurements. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
-1. Download demo data from Zenodo. This will be a directory called "3D_morpho" with subdirectories and image data. Use [zenodo_get](https://github.com/dvolgyes/zenodo_get). (link TBD)
+1. Download demo data from Zenodo. This will be a directory called "3Dmorpho_demo_data" with subdirectories and image data. Use [zenodo_get](https://github.com/dvolgyes/zenodo_get).
+
+        zenodo_get 10.5281/zenodo.10127603
 
 ## Processing raw data
 
