@@ -40,13 +40,6 @@ After installing conda run the following command to create the pipeline run envi
         conda env create -n morph2d --file envs/morph2d.yml
         conda activate morph2d
 
-For creating the pipeline run environment for 3D morphology run the following commands:
-
-
-        conda env create -n morph3d --file envs/morph3d.yml
-        conda activate morph3d
-
-
 ## Protocol for segmenting cells and taking measurements of 2D morphology
 
 This protocol is a step by step computational guide to segment algal cells from video data. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy. The output includes segmented cells as "objects" as well as measurements of the 2D morphology of the cells. For related experimental results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e).
@@ -178,94 +171,6 @@ Run ZProj-contrast.ijm (code/FIJI/3D_Morpho_macros/ZProj-contrast.ijm) and selec
 
 The macro will then generate a MIP saved in a ./MIPs directory inside the selected directory of composite images.
 
-## Image segmentation
-
-This section of the pipeline will utilize the Allen Institute's cell segmentation software (https://www.allencell.org/segmenter.html) to generate segmentation masks of the deconvolved data you processed above. You can use the Napari plug-in or run their code through jupyter notebooks. Please refer to the documentation associated with their github repository (https://github.com/AllenCell/aics-segmentation) in order to install their software in your operating system. The napari version is accessible here: (https://www.napari-hub.org/plugins/napari-allencell-segmenter). For the purpose of this demo, we will assume you will be running your analysis in the Napari plug-in:
-
-### Adjusting parameters for image segmentation in Napari using the Allen Institute Cell Segmentation Napari plug-in
-
-5. Installation of Napari and the Allen Institute Cell Segmentation plug-in.
-
-Generate a conda environment following the appropriate installation instructions specific for your operating system from the Napari documentation: https://napari.org/stable/tutorials/fundamentals/installation.html#installation
-
-We generated an environment named
-
-        napari-aics
-
-and the dependencies required to run the analyses in Napari in this environment are available in this file:
-
-        envs/napari-aics.yml
-
-Activate your environment:
-
-        conda activate napari-aics
-
-And open Napari:
-
-        napari
-
-In Napari open up an image from the demo data (./data/C_reinhardtii). You can drag and drop the file into Napari or use File --> Open File(s) to open the image. Next, you can open up the AICS plugin by navigating to: Plugins-->napari-allencell-segmenter-->Workflow editor
-
-You can work through the Workflow Editor to create a segmentation mask. This will allow you to see the results of each step in the workflow as well as save your own .json file to run all of your images in batch processing. We used the following inputs:
-
-### Batch processing to generate image segmentation masks in Napari
-
-6. Once you have generated a workflow and saved the associated .json file you are ready to batch process your data. We have provided the .json files that we generated using the Workflow editor located here: code/Napari/Chloro.json and code/Napari/Mito.json.
-
-To batch process your images in Napari, open the napari-allencell-segmenter-->Batch processing plugin and follow the instructions, providing the directory of the data you would like to process and the location of the workflow .json file.
-
-
-## Quantification
-
-7. Now that you have generated a set of image segmentation masks based on the deconvolution of the raw data files, you are ready to quantify the data.
-
-You will need to generate a conda environment to run two python scripts to estimate the total volume of individual algal cells based on the mitochondrial dye segmentation mask you generated in Napari and to compute the total volume of the chloroplast and mitochondrial networks in each of the images.
-
-We generated an environment named
-
-        volume
-
-and the dependencies required to run the analyses in Napari in this environment are available in this file:
-
-        envs/volume.yml
-
-Activate your environment:
-
-        conda activate volume
-
-To estimate the volume as an ellipse, we wrote a script
-
-        /code/python/ellipsoid_measure_v2.py
-
-to processes a directory of 3D image files to compute the maximum dimensions of the largest segmented region
-in each image. The maximum depth, height, and width of these regions are calculated and saved to a specified CSV file.
-The script is run from the command line, accepting inputs for the directory of image files, and the path to the output CSV file.
-
-Usage:
-
-        python ellipse_measure_v2.py --input-dir <path_to_input_directory> --output-csv <path_to_output_csv_file>
-
-Next, you can calculate the voxel volume of your data as well as the integrated density by providing the following script:
-
-        /code/python/volume_v6.py
-
-This script processes a directory of 3D image masks and a separate directory of raw data images
-to compute the volume, integrated density, and mean intensity of segmented structures in the masks,
-outputting these metrics to a specified output directory.
-The script is run from the command line, accepting inputs for the directory of mask image files,
-the directory of raw data images, and the path to the output directory.
-Usage:
-
-        python script.py --mask-dir <path_to_mask_directory> --raw-data-dir <path_to_raw_data_directory> --output-dir <path_to_output_directory>
-
-You will need to point the script to the directory containing the segmentation masks and the directory containing the original raw data that you have split by channel using our ImageJ macro:
-
-        ND2-Split-BS-v5.ijm
-
-
-## Statistics and Generating Plots
-
-This set of R notebooks takes the output of the dimension measurements generated using the Python code in this GitHub (/code/python/ellipsoid_measure.py and /code/python/volume.py) and calculates the volume of an ellipsoid and the eccentricity as estimates of the cell-body morphology. We then combined those calculated measurements with the organelle dimensions into a csv file ("output_cell_volume_mito_chlor.csv"), filtered the data, checked summary statistics, made violin plots, and compared each measurement by species using non-parametric statistics.
 
 # Versions and platforms
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
