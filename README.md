@@ -173,6 +173,36 @@ This protocol is a step by step computational guide to create panels of a video 
 
         python3 code/python/plot_histogram_vector_images.py
 
+## Cell Wall Analysis: Protocol for measuring cell wall thickness
+
+This protocol is a step-by-step computational guide to analyze the intensity and diameter of calcofluor-white signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. These images are available on [Zenodo]([10.5281/zenodo.10127618](https://doi.org/10.5281/zenodo.10127618)). The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no). 
+
+
+In Step 1, use the zipped folder downloaded from Zenodo as input to Cell Profiler.  Our python code assumes you export the .csv files generated in Cell Profiler to a folder titled "experiment"
+1. Segment & Measure cells in Cell Profiler using [CW_Pipeline.cppipe](./code/CellProfiler/CW_Pipeline.cppipe)
+
+
+2. Extract individual cells from larger files using the cell position coordinates from the Cell Profiler segmentation using [ExtractIndividualCells.py](./code/python/cell_wall/ExtractIndividualCells.py)
+
+3. Re-segment cells & measure objects in Cell Profiler: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets (pipeline [CW_Pipeline_Extracted.cppipe](./code/CellProfiler/CW_Pipeline_Extracted.cppipe)
+
+4. Convert Database to CSV since Cell Profiler doesn't allow exporting large .csv files ([SQLite2CSV.py](code/python/cell_wall/SQLite2CSV.py))
+
+
+4. Use the new cell coordinates of extracted cells to realign extracted cells to to have the major axis parallel with the image frame. Afterwards, I manually moved the files with the "_aligned" suffix to their own subfolder titled "aligned" ([AlignExtractedObjects.py](code/python/cell_wall/AlignExtractedObjects.py)).
+
+
+5. Add additional empty pixels to the side of each "aligned" .tif of the extracted cells so that each extracted image is the same dimension without resizing the actual image. Afterwards, I manually moved the files with the "padded_" prefix to their own subfolder titled "padded" ([PadExtractedTiffs.py](code/python/cell_wall/PadExtractedTiffs.py)).
+
+6. Measure 5 pixel wide line scans through the major and minor axes of the "padded" images. This data is exported to a .csv file and produces a marked up image of the input .tif depicting where the measurement occured ([RadialIntensityMajorMinor.py](code/python/cell_wall/RadialIntensityMajorMinor.py)).
+
+7. Extract the peak values from the line scan data to calculate intensity and width. "processed_" files were then manually moved to a "processed" subfolder ([PeakAndWidthExtractor.py](code/python/cell_wall/PeakAndWidthExtractor.py))
+
+
+8. Split data between peaks and width ([SplitCSVPeaksWidth.py](code/python/cell_wall/SplitCSVPeaksWidth.py)).
+
+Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
+
 # Versions and platforms
 
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
@@ -187,16 +217,4 @@ Memory 32 Gb
 
 # Feedback, contributions, and reuse
 
-We try to be as open as possible with our work and make all of our code both available and usable.
-We love receiving feedback at any level, through comments on our pubs or Twitter and issues or pull requests here on GitHub.
-In turn, we routinely provide public feedback on other people’s work by [commenting on preprints](https://sciety.org/lists/f8459240-f79c-4bb2-bb55-b43eae25e4f6), filing issues on repositories when we encounter bugs, and contributing to open-source projects through pull requests and code review.
-
-Anyone is welcome to contribute to our code.
-When we publish new versions of pubs, we include a link to the "Contributions" page for the relevant GitHub repo in the Acknowledgements/Contributors section.
-If someone’s contribution has a substantial impact on our scientific direction, the biological result of a project, or the functionality of our code, the pub’s point person may add that person as a formal contributor to the pub with "Critical Feedback" specified as their role.
-
-Our policy is that external contributors cannot be byline-level authors on pubs, simply because we need to ensure that our byline authors are accountable for the quality and integrity of our work, and we must be able to enforce quick turnaround times for internal pub review.
-We apply this same policy to feedback on the text and other non-code content in pubs.
-
-If you make a substantial contribution, you are welcome to publish it or use it in your own work (in accordance with the license — our pubs are CC BY 4.0 and our code is openly licensed).
-We encourage anyone to build upon our efforts.
+See [this guide](https://github.com/Arcadia-Science/arcadia-software-handbook/blob/main/guides-and-standards/guide-credit-for-contributions.md) to see how we recognize feedback and contributions on our code.
