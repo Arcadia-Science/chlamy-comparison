@@ -36,7 +36,7 @@ for tif_file, csv_file in zip(tif_files, csv_files):
             x_coord = int(row['Location_Center_X'])
             y_coord = int(row['Location_Center_Y'])
             
-            # I assumed that 'AreaShape_Area' is the correct column for side length
+            # Calculation used to determine side length
             side_length = int(row['AreaShape_Area']**0.5)
             
             left = x_coord - 50 - side_length // 2
