@@ -31,5 +31,5 @@ def process_images_in_directory(directory):
             padded_image.save(os.path.join(directory, "padded_" + file))
 
 if __name__ == "__main__":
-    dir_path = '/path/to/your/directory'  # change this to your directory path
+    dir_path = './experiment/extracted/tif'  # change this to your directory path
     process_images_in_directory(dir_path)
