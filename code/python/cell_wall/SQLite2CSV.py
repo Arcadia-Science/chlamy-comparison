@@ -8,12 +8,12 @@ def extract_image_name(full_name):
     return parts[0] + '.tif'
 
 # Connect to the SQLite database
-db_path = 'path_to_your_database.db'  # REPLACE with the path to your SQLite database
+db_path = './experiment/extracted'  # Path to where the SQLite database from the second Cell Profiler run is
 connection = sqlite3.connect(db_path)
 cursor = connection.cursor()
 
 # Fetch all rows from the table
-table_name = 'YourTableName'  # REPLACE with your table name
+table_name = 'MyExpt_Per_Image' 
 cursor.execute(f"SELECT * FROM {table_name}")
 rows = cursor.fetchall()
 
