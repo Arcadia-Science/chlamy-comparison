@@ -125,7 +125,8 @@ This protocol is a step by step computational guide to create panels of a video 
 
 # Cell Wall Analysis
 ## Protocol for measuring cell wall thickness
-This protocol is a step-by-step computational guide to analyze the intensity and diameter of calcofluor-white signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. These images are available on [Zenodo]([10.5281/zenodo.10127618](https://doi.org/10.5281/zenodo.10127618)) The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no). 
+This protocol is a step-by-step computational guide to analyze the intensity and diameter of calcofluor-white signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. These images are available on [Zenodo]([10.5281/zenodo.10127618](https://doi.org/10.5281/zenodo.10127618)). The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no). 
+
 
 1. Segment & Measure cells in Cell Profiler:
 code/CellProfiler/CW_Pipeline.cppipe
