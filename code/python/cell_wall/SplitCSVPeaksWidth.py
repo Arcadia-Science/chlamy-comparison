@@ -2,8 +2,8 @@ import csv
 import os
 
 # Set these paths as needed
-directory_path = './input_directory'
-output_directory = './output_directory'
+directory_path = './experiment/extracted/tif/aligned/padded/csv/processed'
+output_directory = './experiment/extracted/tif/aligned/padded/csv/processed/split'
 
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
