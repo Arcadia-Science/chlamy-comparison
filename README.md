@@ -127,28 +127,31 @@ This protocol is a step by step computational guide to create panels of a video 
 ## Protocol for measuring cell wall thickness
 This protocol is a step-by-step computational guide to analyze the intensity and diameter of calcofluor-white signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. These images are available on [Zenodo]([10.5281/zenodo.10127618](https://doi.org/10.5281/zenodo.10127618)) The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no). 
 
-1. Segment & Measure cells [Link to Cell profiler: 
+1. Segment & Measure cells in Cell Profiler:
 code/CellProfiler/CW_Pipeline.cppipe
 
-2. Extract individual cells from larger files
+2. Extract individual cells from larger files using the cell position coordinates from the Cell Profiler segmentation.
 code/python/cell_wall/ExtractIndividualCells.py
 
-3. Re-segment cells & measure objects: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets.
+3. Re-segment cells & measure objects in Cell Profiler: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets.
 code/CellProfiler/CW_Pipeline_Extracted.cppipe
 
-4. Convert Database to CSV:
+4. Convert Database to CSV since Cell Profiler doesn't allow exporting large .csv files:
 code/python/cell_wall/SQLite2CSV.py
 
-4. Align based on coordinates
+4. Use the new cell coordinates of extracted cells to realign extracted cells to to have the major axis parallel with the image frame. Afterwards, I manually moved the files with the "_aligned" suffix to their own subfolder titled "aligned"
 code/python/cell_wall/AlignExtractedObjects.py
 
-5. Pad Files so line scans are evenly distributed
+5. Add additional empty pixels to the side of each "aligned" .tif of the extracted cells so that each extracted image is the same dimension without resizing the actual image. Afterwards, I manually moved the files with the "padded_" prefix to their own subfolder titled "padded". 
 code/python/cell_wall/PadExtractedTiffs.py
 
-6. Line Scans through major and minor axes. This data is exported to a .csv file. 
+6. Measure 5 pixel wide line scans through the major and minor axes of the "padded" images. This data is exported to a .csv file and produces a marked up image of the input .tif depicting where the measurement occured. 
 code/python/cell_wall/RadialIntensityMajorMinor.py
 
-7. Split data between peaks and width
+7. Extract the peak values from the line scan data to calculate intensity and width. "processed_" files were then manually moved to a "processed" subfolder
+code/python/cell_wall/PeakAndWidthExtractor.py
+
+9. Split data between peaks and width. 
 code/python/cell_wall/SplitCSVPeaksWidth.py
 
 Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
