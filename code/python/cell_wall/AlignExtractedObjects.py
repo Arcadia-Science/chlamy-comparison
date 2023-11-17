@@ -12,9 +12,9 @@ def align_major_axis(image_path, orientation_angle):
         # Save the rotated image with "_aligned" appended to the original filename
         rotated_img.save(image_path[:-4] + "_aligned.tif")
 
-# Replace the directory paths with the paths where your CSV and TIFF files are stored
-csv_directory = 'path_to_csv_files_directory'  # e.g., '/path/to/csv/directory'
-tif_directory = 'path_to_tif_files_directory'  # e.g., '/path/to/tif/directory'
+# Replace the directory paths with the paths where the CSV that was converted from the SQLite database and the extracted TIFF files are stored
+csv_directory = './experiment/extracted/csv'  
+tif_directory = './experiment/extracted/tif'  
 
 # Iterate over all CSV files in the given directory
 for csv_file in os.listdir(csv_directory):
