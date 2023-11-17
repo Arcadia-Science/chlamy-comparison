@@ -4,15 +4,14 @@ import tifffile as tf
 from PIL import Image
 
 # Specify the path to the main directory
-directory_path = "/path/to/your/directory" 
+directory_path = "./experiment"
 
 # Paths to the subfolders
-tif_directory = "/path/to/your/tifs"
-csv_directory = "/path/to/your/csv"
+tif_directory = "./experiment/tif" #This should be where your raw TIF files are stored
+csv_directory = "./experiment/csv" #This should be where you've stored the CellProfiler output CSV files
 
 # Output directory
-output_directory = "/path/to/your/output"
-
+output_directory = "./experiment/extracted"
 # Get lists of all .tif and .csv files
 tif_files = sorted([f for f in os.listdir(tif_directory) if f.endswith('.tif')])
 csv_files = sorted([f for f in os.listdir(csv_directory) if f.endswith('.csv')])
