@@ -2,7 +2,7 @@
 
 This repository contains code for image processing and analysis to compare phenotypes of interfertile *Chlamydomonas* species. These analyses are included in the publication [Phenotypic differences between interfertile Chlamydomonas species](https://doi.org/10.57844/arcadia-35f0-3e16).
 
-![C. smithii is ~20% larger than C. reinhardtii](morphology_2d.gif)
+![C. smithii is ~20% larger than C. reinhardtii](figs/morphology_2d.gif)
 
 C. smithii is ~20% larger than C. reinhardtii
 
@@ -27,7 +27,7 @@ You can find operating system-specific instructions for installing miniconda [he
                 source ~/.bashrc # source the .bashrc for miniconda to be available in the environment
 
                 # configure miniconda channel order
-                conda config --add channels defaults 
+                conda config --add channels defaults
                 conda config --add channels bioconda
                 conda config --add channels conda-forge
                 conda config --set channel_priority strict
@@ -54,7 +54,7 @@ This protocol is a step by step computational guide to segment algal cells from 
 3. Parse focal sequences of frames from "pools". [Link Python script](./code/python/morphology_2d/focus_filter_laplacian.py)
 
         python3 code/python/morphology_2d/focus_filter_laplacian.py
-   
+
 5. Sample the focal sequences randomly to generate a training set for pixel classification. [Link to Python script](./code/python/morphology_2d/sample_training_set.py)
 
         python3 code/python/morphology_2d/sample_training_set.py
@@ -80,18 +80,19 @@ This protocol is a step by step computational guide to segment algal cells from 
 
         python3 code/python/morphology_2d/parse_2d_morphology.py
 
+
 ## Script for generating vector graphics of idealized cell
 
 This script will generate a vector graphic of an idealized cell. The user may define the 2D morphology measurements in the script. The output is a vector graphic. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nj8khdxj90e). [Link to Python script](./code/python/idealized_cell/chlamy_modeler.py)
 
     python3 code/python/idealized_cell/chlamy_modeler.py
 
-## Protocol for visual and qualitative assessments of cell morphology
+## Protocol for visual assessments of cell morphology
 
 This protocol is a step by step computational guide to create panels of a video to display difference in the 2D morphology of interfertile algal species. The protocol follows upon the previous protocols in this document. The input is video data of algal cells collected by brightfield or differential interference contrast microscopy, as well as object masks. The output includes videos of masked cells and cumulative average projections of cells. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no).
 
 
-1. Create a list of images with maximum area objects with relevant metadata. [Link to Python script](./code/python/morphology_qualitative/max_area_image_object_list.py)
+1. Creat a list of images with maximum area objects with relevant metadata. [Link to Python script](./code/python/morphology_qualitative/max_area_image_object_list.py)
 
         python3 code/python/morphology_qualitative/max_area_image_object_list.py
 
@@ -123,8 +124,57 @@ This protocol is a step by step computational guide to create panels of a video 
 
 9.  Calculate cumulative average projections from the substacks with the Fiji macro batch_sequential_avg_projection.ijm. [Link to Fiji macro](./code/FIJI/batch_sequential_avg_projection.ijm)
 
-# Cell Wall Analysis
-## Protocol for measuring cell wall thickness
+## Protocol for measurement and visual assessment of cell motility
+
+![C. reinhardtii swims faster and they have different and complex modes of motility](figs/fig_motility_dynamic.gif)
+
+1. Activate the environment with conda.
+
+     conda env create -n motility --file envs/motility.yml
+     conda activate motility
+   
+2. Download data from Zenodo. This will be a directory called "experiments" with subdirectories and image data. **Skip this step if data is already downloaded.** Use [zenodo_get](https://github.com/dvolgyes/zenodo_get).
+
+        zenodo_get 10.5281/zenodo.8326749
+
+3. Collect information about objects. The script processes a set of images, identifies objects in them, calculates their centroids, and determines the movement direction of the largest object by comparing the centroids between frames. **Input** = cell objects. **Output** = image_data_with_upward_angles.csv file. [Link to script](./code/python/motility_dynamic_fig/object_trajectory_info.py)
+
+        python3 code/python/motility_dynamic_fig/object_trajectory_info.py
+
+4. Reorient objects. The script processes images based on data in the CSV file. It rotates, translates, and crops each image based on the movement direction of a detected object. The processed images are then saved in new directories, ".../final_transformed_images/...". **Input** = objects and image_data_with_upward_angles.csv. **Output** = transformed images. [Link to script](./code/python/motility_dynamic_fig/rotate_translate.py)
+
+        python3 code/python/motility_dynamic_fig/rotate_translate.py
+
+5. Calculate angular and linear displacement from frame to frame. The script processes images, identifies contours, and computes both angular (degrees) and linear (pixels) displacements between contours in consecutive frames. The angle is calculated as the angle between two vectors defined by three consecutive points. The linear displacement is the distance between point two and three. The displacements are listed under the third point. The results are saved to a CSV file. **Input** = images in final_transformed_images directories. **Output** = centroids_displacements.csv. In these images 1 pixel = 0.6398 microns. [Link to script](./code/python/motility_dynamic_fig/angular_linear_displacement.py)
+
+        python3 code/python/motility_dynamic_fig/angular_linear_displacement.py
+
+6. Calculate the mean absolute angular displacement per track. Only include allowed experiments. Experiment 3 was removed due to external flow through the wells. **Input** = centroids_displacements.csv. **Output** = mean_angular_displacements_allowed.csv. [Link to script](./code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py)
+
+        python3 code/python/motility_dynamic_fig/mean_per_track_allowed_experiments.py
+
+7. Filter data. This script filters rows from an input CSV file where the 'seq_frame' column has a value of 0 and writes the filtered data to an output CSV file. **Input** = mean_angular_displacements_allowed.csv. **Output** = filtered_unbinned_data.csv. [Link to script](./code/python/motility_dynamic_fig/filter_data.py)
+
+        python3 code/python/motility_dynamic_fig/filter_data.py
+
+8. Sample filtered data to ensure equal representation of each species for each experiment. This script samples rows from an input CSV file, ensuring that each combination of 'experiment' and 'species' in the dataset is represented by the same number of rows. This number is determined by the smallest group size of the combinations. The sampled data is then written to an output CSV file. **Input** = filtered_unbinned_data.csv. **Output** = sampled_unbinned_data.csv. [Link to script](./code/python/motility_dynamic_fig/sample_filtered_data.py)
+
+        python3 code/python/motility_dynamic_fig/sample_filtered_data.py
+
+9. Bin the sampled data into 18 bins representing 10 degree spans between 0 and 180 degrees. This script reads data from an input CSV file, bins the 'avg_displacement' values into 18 bins,and assigns each row a bin number based on its 'avg_displacement' value. The binned data is then written to an output CSV file.  **Input** = sampled_unbinned_data.csv. **Output** = sampled_binned_data.csv. [Link to script](./code/python/motility_dynamic_fig/bin_sampled_data.py)
+
+        python3 code/python/motility_dynamic_fig/bin_sampled_data.py
+
+10. Merge data into one csv file. This script merges two input CSV files (`sampled_binned_data.csv` and `centroids_displacements.csv`) based on common columns ('experiment', 'species', 'pool_ID', and 'seq_number'). After merging, it retains specific columns from the sampled file and all columns from the centroids file. The merged data is then written to an output CSV file. **Inputs** = sampled_binned_data.csv and  centroids_displacements.csv. **Output** = merged_data.csv. [Link to script](./code/python/motility_dynamic_fig/merged_data.csv)
+
+        python3 code/python/motility_dynamic_fig/parse_sampled_binned_sequences.py experiments/sampled_binned_data.csv experiments/centroids_displacements.csv experiments/merged_data.csv
+
+11. Plot histogram with bins and generate vector tracks. This script performs multiple visualization tasks on data read from a CSV file named 'merged_data.csv'. First, it creates and saves vector plots for different groups in the data, with each plot displaying a vector and an associated average angular velocity. Then, it generates a histogram displaying the frequency of bins by species for seq_frame=0. The vector plots are saved as grayscale 8-bit TIFF images in specific directories, and the histogram is saved as a PNG. **Input** = merged_data.csv. **Output** = Images of vector tracks saved in directories as such, "./experiments/vectors_sampled_binned/bin_{bin_category}/{species}/". [Link to script](./code/python/motility_dynamic_fig/plot_histogram_vector_images.py)
+
+        python3 code/python/plot_histogram_vector_images.py
+
+## Cell Wall Analysis: Protocol for measuring cell wall thickness
+
 This protocol is a step-by-step computational guide to analyze the intensity and diameter of calcofluor-white signal marking the cell wall of Chlamydomonas species. The input is single-frame, greyscale 16-bit .tif files of the medial z-plane of fixed and stained algal cells collected by spinning disk microscopy through standard DAPI settings. These images are available on [Zenodo]([10.5281/zenodo.10127618](https://doi.org/10.5281/zenodo.10127618)). The output includes images of marked cells and raw intensity values through the max axis and the min axis. For related results [follow this link](https://research.arcadiascience.com/pub/result-chlamydomonas-phenotypes#nsmnfifz9no). 
 
 
@@ -153,13 +203,9 @@ In Step 1, use the zipped folder downloaded from Zenodo as input to Cell Profile
 
 Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
 
-
 # Versions and platforms
+
 *Fiji macro* was used with ImageJ2 Version 2.14.0/1.54f
-
-*R* code was run with R version 4.3.0 (2023-04-21)
-
-*R Libraries/packages*: tidyverse 2.0.0, dplyr     1.1.2, readr     2.1.4, forcats   1.0.0, stringr   1.5.0, ggplot2   3.4.2, tibble    3.2.1, lubridate 1.9.2, tidyr     1.3.0, purrr     1.0.1
 
 *Python* code was run with Python 3.11.5
 
@@ -171,17 +217,4 @@ Memory 32 Gb
 
 # Feedback, contributions, and reuse
 
-We try to be as open as possible with our work and make all of our code both available and usable.
-We love receiving feedback at any level, through comments on our pubs or Twitter and issues or pull requests here on GitHub.
-In turn, we routinely provide public feedback on other people’s work by [commenting on preprints](https://sciety.org/lists/f8459240-f79c-4bb2-bb55-b43eae25e4f6), filing issues on repositories when we encounter bugs, and contributing to open-source projects through pull requests and code review.
-
-Anyone is welcome to contribute to our code.
-When we publish new versions of pubs, we include a link to the "Contributions" page for the relevant GitHub repo in the Acknowledgements/Contributors section.
-If someone’s contribution has a substantial impact on our scientific direction, the biological result of a project, or the functionality of our code, the pub’s point person may add that person as a formal contributor to the pub with "Critical Feedback" specified as their role.
-
-Our policy is that external contributors cannot be byline-level authors on pubs, simply because we need to ensure that our byline authors are accountable for the quality and integrity of our work, and we must be able to enforce quick turnaround times for internal pub review.
-We apply this same policy to feedback on the text and other non-code content in pubs.
-
-If you make a substantial contribution, you are welcome to publish it or use it in your own work (in accordance with the license — our pubs are CC BY 4.0 and our code is openly licensed).
-We encourage anyone to build upon our efforts.
-
+See [this guide](https://github.com/Arcadia-Science/arcadia-software-handbook/blob/main/guides-and-standards/guide-credit-for-contributions.md) to see how we recognize feedback and contributions on our code.
