@@ -7,7 +7,7 @@ from PIL import Image
 directory_path = "./experiment"
 
 # Paths to the subfolders
-tif_directory = "./experiment/tif" #This should be where your raw TIF files are stored
+tif_directory = "./CellWallAnalysisImages/" # This should be where your raw TIF files are stored, the ones downloaded from zenodo
 csv_directory = "./experiment/csv" #This should be where you've stored the CellProfiler output CSV files
 
 # Output directory
