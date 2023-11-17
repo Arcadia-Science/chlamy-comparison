@@ -129,32 +129,27 @@ This protocol is a step-by-step computational guide to analyze the intensity and
 
 
 In Step 1, use the zipped folder downloaded from Zenodo as input to Cell Profiler.  Our python code assumes you export the .csv files generated in Cell Profiler to a folder titled "experiment"
-1. Segment & Measure cells in Cell Profiler:
-code/CellProfiler/CW_Pipeline.cppipe
+1. Segment & Measure cells in Cell Profiler using [CW_Pipeline.cppipe](./code/CellProfiler/CW_Pipeline.cppipe)
 
-2. Extract individual cells from larger files using the cell position coordinates from the Cell Profiler segmentation.
-code/python/cell_wall/ExtractIndividualCells.py
 
-3. Re-segment cells & measure objects in Cell Profiler: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets.
-code/CellProfiler/CW_Pipeline_Extracted.cppipe
+2. Extract individual cells from larger files using the cell position coordinates from the Cell Profiler segmentation using [ExtractIndividualCells.py](./code/python/cell_wall/ExtractIndividualCells.py)
 
-4. Convert Database to CSV since Cell Profiler doesn't allow exporting large .csv files:
-code/python/cell_wall/SQLite2CSV.py
+3. Re-segment cells & measure objects in Cell Profiler: Use this updated pipeline that provides the same coordinate & orientation measurements but is adapted for larger datasets (pipeline [CW_Pipeline_Extracted.cppipe](./code/CellProfiler/CW_Pipeline_Extracted.cppipe)
 
-4. Use the new cell coordinates of extracted cells to realign extracted cells to to have the major axis parallel with the image frame. Afterwards, I manually moved the files with the "_aligned" suffix to their own subfolder titled "aligned"
-code/python/cell_wall/AlignExtractedObjects.py
+4. Convert Database to CSV since Cell Profiler doesn't allow exporting large .csv files ([SQLite2CSV.py](code/python/cell_wall/SQLite2CSV.py))
 
-5. Add additional empty pixels to the side of each "aligned" .tif of the extracted cells so that each extracted image is the same dimension without resizing the actual image. Afterwards, I manually moved the files with the "padded_" prefix to their own subfolder titled "padded". 
-code/python/cell_wall/PadExtractedTiffs.py
 
-6. Measure 5 pixel wide line scans through the major and minor axes of the "padded" images. This data is exported to a .csv file and produces a marked up image of the input .tif depicting where the measurement occured. 
-code/python/cell_wall/RadialIntensityMajorMinor.py
+4. Use the new cell coordinates of extracted cells to realign extracted cells to to have the major axis parallel with the image frame. Afterwards, I manually moved the files with the "_aligned" suffix to their own subfolder titled "aligned" ([AlignExtractedObjects.py](code/python/cell_wall/AlignExtractedObjects.py)).
 
-7. Extract the peak values from the line scan data to calculate intensity and width. "processed_" files were then manually moved to a "processed" subfolder
-code/python/cell_wall/PeakAndWidthExtractor.py
 
-9. Split data between peaks and width. 
-code/python/cell_wall/SplitCSVPeaksWidth.py
+5. Add additional empty pixels to the side of each "aligned" .tif of the extracted cells so that each extracted image is the same dimension without resizing the actual image. Afterwards, I manually moved the files with the "padded_" prefix to their own subfolder titled "padded" ([PadExtractedTiffs.py](code/python/cell_wall/PadExtractedTiffs.py)).
+
+6. Measure 5 pixel wide line scans through the major and minor axes of the "padded" images. This data is exported to a .csv file and produces a marked up image of the input .tif depicting where the measurement occured ([RadialIntensityMajorMinor.py](code/python/cell_wall/RadialIntensityMajorMinor.py)).
+
+7. Extract the peak values from the line scan data to calculate intensity and width. "processed_" files were then manually moved to a "processed" subfolder ([PeakAndWidthExtractor.py](code/python/cell_wall/PeakAndWidthExtractor.py))
+
+
+8. Split data between peaks and width ([SplitCSVPeaksWidth.py](code/python/cell_wall/SplitCSVPeaksWidth.py)).
 
 Data output from here was imported into GraphPad Prism for visualization and 2way ANOVA calculations.
 
