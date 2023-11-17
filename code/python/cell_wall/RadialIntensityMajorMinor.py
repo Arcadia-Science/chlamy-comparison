@@ -80,8 +80,8 @@ def process_images_in_directory(directory, prefixes=None, output_directory=None)
         plt.show()
 
 if __name__ == "__main__":
-    directory_path = input("Enter the path to the directory containing the .tif files: ")
-    output_directory_path = input("Enter the path to the output directory (or press Enter to use a default 'Output' subdirectory): ")
-    prefix_input = input("Enter a comma-separated list of prefixes to match (or press Enter to process all files): ")
+    directory_path = './experiment/extracted/tif/padded' 
+    output_directory_path = './experiment/extracted/tif/padded/marked'
+    prefix_input = 'padded'
     prefixes_list = None if prefix_input == '' else prefix_input.split(',')
     process_images_in_directory(directory_path, prefixes=prefixes_list, output_directory=output_directory_path)
